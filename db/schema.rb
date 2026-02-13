@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_02_12_193124) do
+ActiveRecord::Schema[8.1].define(version: 2026_02_13_050856) do
   create_table "assignments", force: :cascade do |t|
     t.text "body"
     t.datetime "created_at", null: false
@@ -36,6 +36,15 @@ ActiveRecord::Schema[8.1].define(version: 2026_02_12_193124) do
     t.datetime "updated_at", null: false
   end
 
+  create_table "teams", force: :cascade do |t|
+    t.integer "assignment_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.integer "user_id", null: false
+    t.index ["assignment_id"], name: "index_teams_on_assignment_id"
+    t.index ["user_id"], name: "index_teams_on_user_id"
+  end
+
   create_table "users", force: :cascade do |t|
     t.datetime "created_at", null: false
     t.text "firstname"
@@ -46,4 +55,6 @@ ActiveRecord::Schema[8.1].define(version: 2026_02_12_193124) do
   add_foreign_key "assignments", "users"
   add_foreign_key "contacts", "users"
   add_foreign_key "contacts", "users", column: "contact_id"
+  add_foreign_key "teams", "assignments"
+  add_foreign_key "teams", "users"
 end
