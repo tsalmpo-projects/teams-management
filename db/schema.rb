@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_02_13_055420) do
+ActiveRecord::Schema[8.1].define(version: 2026_02_13_183433) do
   create_table "assignments", force: :cascade do |t|
     t.text "body"
     t.datetime "created_at", null: false
@@ -40,13 +40,6 @@ ActiveRecord::Schema[8.1].define(version: 2026_02_13_055420) do
     t.index ["recipient_id"], name: "index_messages_on_recipient_id"
     t.index ["sender_id"], name: "index_messages_on_sender_id"
     t.index ["team_id"], name: "index_messages_on_team_id"
-  end
-
-  create_table "posts", force: :cascade do |t|
-    t.string "body"
-    t.datetime "created_at", null: false
-    t.string "title"
-    t.datetime "updated_at", null: false
   end
 
   create_table "team_members", id: false, force: :cascade do |t|
