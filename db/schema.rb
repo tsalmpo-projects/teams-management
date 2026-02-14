@@ -10,11 +10,68 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_01_30_200703) do
-  create_table "posts", force: :cascade do |t|
-    t.string "body"
+ActiveRecord::Schema[8.1].define(version: 2026_02_13_185317) do
+  create_table "assignments", force: :cascade do |t|
+    t.text "body"
     t.datetime "created_at", null: false
-    t.string "title"
+    t.text "title"
+    t.datetime "updated_at", null: false
+    t.integer "user_id", null: false
+    t.index ["user_id"], name: "index_assignments_on_user_id"
+  end
+
+  create_table "contacts", force: :cascade do |t|
+    t.integer "contact_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.integer "user_id", null: false
+    t.index ["contact_id"], name: "index_contacts_on_contact_id"
+    t.index ["user_id"], name: "index_contacts_on_user_id"
+  end
+
+  create_table "messages", force: :cascade do |t|
+    t.integer "assignment_id"
+    t.text "content"
+    t.datetime "created_at", null: false
+    t.integer "recipient_id"
+    t.integer "sender_id", null: false
+    t.integer "team_id"
+    t.datetime "updated_at", null: false
+    t.index ["assignment_id"], name: "index_messages_on_assignment_id"
+    t.index ["recipient_id"], name: "index_messages_on_recipient_id"
+    t.index ["sender_id"], name: "index_messages_on_sender_id"
+    t.index ["team_id"], name: "index_messages_on_team_id"
+  end
+
+  create_table "team_members", id: false, force: :cascade do |t|
+    t.integer "team_id", null: false
+    t.integer "user_id", null: false
+    t.index ["team_id", "user_id"], name: "index_team_members_on_team_id_and_user_id", unique: true
+  end
+
+  create_table "teams", force: :cascade do |t|
+    t.integer "assignment_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.integer "user_id", null: false
+    t.index ["assignment_id"], name: "index_teams_on_assignment_id"
+    t.index ["user_id"], name: "index_teams_on_user_id"
+  end
+
+  create_table "users", force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.text "firstname"
+    t.text "lastname"
     t.datetime "updated_at", null: false
   end
+
+  add_foreign_key "assignments", "users"
+  add_foreign_key "contacts", "users"
+  add_foreign_key "contacts", "users", column: "contact_id"
+  add_foreign_key "messages", "assignments"
+  add_foreign_key "messages", "teams"
+  add_foreign_key "messages", "users", column: "recipient_id"
+  add_foreign_key "messages", "users", column: "sender_id"
+  add_foreign_key "teams", "assignments"
+  add_foreign_key "teams", "users"
 end
