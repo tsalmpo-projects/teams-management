@@ -1,0 +1,114 @@
+<div class="py-6">
+  <div class="mb-8">
+    <h1 class="text-2xl font-bold text-gray-900 mb-1">My Teams</h1>
+    <p class="text-gray-600">Teams you've joined across all assignments.</p>
+  </div>
+
+  <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+
+    <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-5">
+      <div class="mb-4">
+        <h3 class="text-lg font-semibold text-gray-900">Database Normalization Project</h3>
+        <p class="text-sm text-gray-500">Computer Science &middot; Due in 5 days</p>
+      </div>
+      <div class="flex items-center justify-between">
+        <div class="flex -space-x-2">
+          <%= link_to profile_path(1), title: "Anna Papadopoulou" do %>
+            <div class="h-8 w-8 rounded-full bg-blue-100 flex items-center justify-center text-xs font-medium text-blue-700 border-2 border-white hover:ring-2 hover:ring-blue-300 transition-shadow">AP</div>
+          <% end %>
+          <%= link_to profile_path(2), title: "Nikos Karagiannis" do %>
+            <div class="h-8 w-8 rounded-full bg-green-100 flex items-center justify-center text-xs font-medium text-green-700 border-2 border-white hover:ring-2 hover:ring-green-300 transition-shadow">NK</div>
+          <% end %>
+          <%= link_to profile_path(3), title: "Elena Vlachou" do %>
+            <div class="h-8 w-8 rounded-full bg-purple-100 flex items-center justify-center text-xs font-medium text-purple-700 border-2 border-white hover:ring-2 hover:ring-purple-300 transition-shadow">EV</div>
+          <% end %>
+        </div>
+        <%= link_to messages_path, class: "inline-flex items-center gap-1.5 rounded-lg bg-blue-50 px-3 py-1.5 text-sm font-medium text-blue-700 hover:bg-blue-100 transition-colors" do %>
+          <svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M8.625 12a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Zm0 0H8.25m4.125 0a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Zm0 0H12m4.125 0a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Zm0 0h-.375M21 12c0 4.556-4.03 8.25-9 8.25a9.764 9.764 0 0 1-2.555-.337A5.972 5.972 0 0 1 5.41 20.97a5.969 5.969 0 0 1-.474-.065 4.48 4.48 0 0 0 .978-2.025c.09-.457-.133-.901-.467-1.226C3.93 16.178 3 14.189 3 12c0-4.556 4.03-8.25 9-8.25s9 3.694 9 8.25Z" />
+          </svg>
+          Chat
+        <% end %>
+      </div>
+    </div>
+
+    <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-5">
+      <div class="mb-4">
+        <h3 class="text-lg font-semibold text-gray-900">Quantum Mechanics Problem Set</h3>
+        <p class="text-sm text-gray-500">Physics &middot; Due in 3 days</p>
+      </div>
+      <div class="flex items-center justify-between">
+        <div class="flex -space-x-2">
+          <%= link_to profile_path(2), title: "Nikos Karagiannis" do %>
+            <div class="h-8 w-8 rounded-full bg-green-100 flex items-center justify-center text-xs font-medium text-green-700 border-2 border-white hover:ring-2 hover:ring-green-300 transition-shadow">NK</div>
+          <% end %>
+          <%= link_to profile_path(4), title: "Dimitris Makris" do %>
+            <div class="h-8 w-8 rounded-full bg-yellow-100 flex items-center justify-center text-xs font-medium text-yellow-700 border-2 border-white hover:ring-2 hover:ring-yellow-300 transition-shadow">DM</div>
+          <% end %>
+        </div>
+        <%= link_to messages_path, class: "inline-flex items-center gap-1.5 rounded-lg bg-blue-50 px-3 py-1.5 text-sm font-medium text-blue-700 hover:bg-blue-100 transition-colors" do %>
+          <svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M8.625 12a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Zm0 0H8.25m4.125 0a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Zm0 0H12m4.125 0a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Zm0 0h-.375M21 12c0 4.556-4.03 8.25-9 8.25a9.764 9.764 0 0 1-2.555-.337A5.972 5.972 0 0 1 5.41 20.97a5.969 5.969 0 0 1-.474-.065 4.48 4.48 0 0 0 .978-2.025c.09-.457-.133-.901-.467-1.226C3.93 16.178 3 14.189 3 12c0-4.556 4.03-8.25 9-8.25s9 3.694 9 8.25Z" />
+          </svg>
+          Chat
+        <% end %>
+      </div>
+    </div>
+
+    <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-5">
+      <div class="mb-4">
+        <h3 class="text-lg font-semibold text-gray-900">Linear Algebra Proofs</h3>
+        <p class="text-sm text-gray-500">Math &middot; Due in 10 days</p>
+      </div>
+      <div class="flex items-center justify-between">
+        <div class="flex -space-x-2">
+          <%= link_to profile_path(3), title: "Elena Vlachou" do %>
+            <div class="h-8 w-8 rounded-full bg-purple-100 flex items-center justify-center text-xs font-medium text-purple-700 border-2 border-white hover:ring-2 hover:ring-purple-300 transition-shadow">EV</div>
+          <% end %>
+          <%= link_to profile_path(5), title: "George Theodorou" do %>
+            <div class="h-8 w-8 rounded-full bg-blue-100 flex items-center justify-center text-xs font-medium text-blue-700 border-2 border-white hover:ring-2 hover:ring-blue-300 transition-shadow">GT</div>
+          <% end %>
+          <%= link_to profile_path(6), title: "Maria Lazaridou" do %>
+            <div class="h-8 w-8 rounded-full bg-green-100 flex items-center justify-center text-xs font-medium text-green-700 border-2 border-white hover:ring-2 hover:ring-green-300 transition-shadow">ML</div>
+          <% end %>
+          <%= link_to profile_path(8), title: "Ioanna Nikolaou" do %>
+            <div class="h-8 w-8 rounded-full bg-yellow-100 flex items-center justify-center text-xs font-medium text-yellow-700 border-2 border-white hover:ring-2 hover:ring-yellow-300 transition-shadow">IN</div>
+          <% end %>
+        </div>
+        <%= link_to messages_path, class: "inline-flex items-center gap-1.5 rounded-lg bg-blue-50 px-3 py-1.5 text-sm font-medium text-blue-700 hover:bg-blue-100 transition-colors" do %>
+          <svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M8.625 12a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Zm0 0H8.25m4.125 0a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Zm0 0H12m4.125 0a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Zm0 0h-.375M21 12c0 4.556-4.03 8.25-9 8.25a9.764 9.764 0 0 1-2.555-.337A5.972 5.972 0 0 1 5.41 20.97a5.969 5.969 0 0 1-.474-.065 4.48 4.48 0 0 0 .978-2.025c.09-.457-.133-.901-.467-1.226C3.93 16.178 3 14.189 3 12c0-4.556 4.03-8.25 9-8.25s9 3.694 9 8.25Z" />
+          </svg>
+          Chat
+        <% end %>
+      </div>
+    </div>
+
+    <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-5">
+      <div class="mb-4">
+        <h3 class="text-lg font-semibold text-gray-900">Organic Chemistry Lab Report</h3>
+        <p class="text-sm text-gray-500">Chemistry &middot; Due in 7 days</p>
+      </div>
+      <div class="flex items-center justify-between">
+        <div class="flex -space-x-2">
+          <%= link_to profile_path(4), title: "Dimitris Makris" do %>
+            <div class="h-8 w-8 rounded-full bg-yellow-100 flex items-center justify-center text-xs font-medium text-yellow-700 border-2 border-white hover:ring-2 hover:ring-yellow-300 transition-shadow">DM</div>
+          <% end %>
+          <%= link_to profile_path(7), title: "Kostas Stavridis" do %>
+            <div class="h-8 w-8 rounded-full bg-purple-100 flex items-center justify-center text-xs font-medium text-purple-700 border-2 border-white hover:ring-2 hover:ring-purple-300 transition-shadow">KS</div>
+          <% end %>
+          <%= link_to profile_path(1), title: "Anna Papadopoulou" do %>
+            <div class="h-8 w-8 rounded-full bg-blue-100 flex items-center justify-center text-xs font-medium text-blue-700 border-2 border-white hover:ring-2 hover:ring-blue-300 transition-shadow">AP</div>
+          <% end %>
+        </div>
+        <%= link_to messages_path, class: "inline-flex items-center gap-1.5 rounded-lg bg-blue-50 px-3 py-1.5 text-sm font-medium text-blue-700 hover:bg-blue-100 transition-colors" do %>
+          <svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M8.625 12a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Zm0 0H8.25m4.125 0a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Zm0 0H12m4.125 0a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Zm0 0h-.375M21 12c0 4.556-4.03 8.25-9 8.25a9.764 9.764 0 0 1-2.555-.337A5.972 5.972 0 0 1 5.41 20.97a5.969 5.969 0 0 1-.474-.065 4.48 4.48 0 0 0 .978-2.025c.09-.457-.133-.901-.467-1.226C3.93 16.178 3 14.189 3 12c0-4.556 4.03-8.25 9-8.25s9 3.694 9 8.25Z" />
+          </svg>
+          Chat
+        <% end %>
+      </div>
+    </div>
+
+  </div>
+</div>

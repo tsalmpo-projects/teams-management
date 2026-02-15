@@ -22,7 +22,7 @@
     <%= stylesheet_link_tag :app, "data-turbo-track": "reload" %>
   </head>
 
-  <body class="bg-gray-50 min-h-screen flex flex-col">
+  <body class="bg-gray-50 flex flex-col <%= content_for?(:fullscreen) ? 'h-screen overflow-hidden' : 'min-h-screen' %>">
     <%= render 'layouts/header' %>
 
     <% if notice.present? %>
@@ -41,7 +41,7 @@
       </div>
     <% end %>
 
-    <main class="flex-1 mx-auto max-w-7xl w-full px-4 sm:px-6 lg:px-8 py-8">
+    <main class="flex-1 <%= content_for?(:fullscreen) ? 'flex flex-col overflow-hidden' : 'mx-auto max-w-7xl w-full px-4 sm:px-6 lg:px-8 py-8' %>">
       <%= yield %>
     </main>
   </body>

@@ -1,44 +1,122 @@
 <% if user_signed_in? %>
   <div class="py-6">
-    <h1 class="text-3xl font-bold text-gray-900 mb-2">Welcome back, <%= current_user.firstname || current_user.email.split('@').first %>!</h1>
-    <p class="text-gray-600 mb-8">Here's your dashboard overview.</p>
+    <h1 class="text-2xl font-bold text-gray-900 mb-1">Published Assignments</h1>
+    <p class="text-gray-600 mb-8">Browse assignments posted by students across all departments.</p>
 
-    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-      <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
-        <div class="flex items-center gap-3 mb-3">
-          <div class="rounded-lg bg-blue-100 p-2">
-            <svg class="h-6 w-6 text-blue-600" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
-              <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 14.25v-2.625a3.375 3.375 0 0 0-3.375-3.375h-1.5A1.125 1.125 0 0 1 13.5 7.125v-1.5a3.375 3.375 0 0 0-3.375-3.375H8.25m2.25 0H5.625c-.621 0-1.125.504-1.125 1.125v17.25c0 .621.504 1.125 1.125 1.125h12.75c.621 0 1.125-.504 1.125-1.125V11.25a9 9 0 0 0-9-9Z" />
-            </svg>
-          </div>
-          <h3 class="text-lg font-semibold text-gray-900">Assignments</h3>
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+
+      <div class="bg-white rounded-xl shadow-sm border border-gray-200 border-l-4 border-l-blue-600 p-5 flex flex-col justify-between">
+        <div>
+          <%= link_to "Database Normalization Project", assignment_path(1), class: "text-lg font-semibold text-gray-900 mb-2 block hover:text-blue-600 transition-colors" %>
+          <p class="text-sm text-gray-600 line-clamp-3">Design and implement a fully normalized relational database schema for a university library system. Include ER diagrams and SQL scripts.</p>
         </div>
-        <p class="text-sm text-gray-600">View and manage your assignments.</p>
+        <%= link_to profile_path(1), class: "flex items-center gap-3 mt-4 pt-4 border-t border-gray-100 hover:bg-gray-50 -mx-5 -mb-5 px-5 pb-5 pt-4 rounded-b-xl transition-colors" do %>
+          <div class="h-8 w-8 rounded-full bg-blue-100 flex items-center justify-center text-xs font-medium text-blue-700">AP</div>
+          <div>
+            <p class="text-sm font-medium text-gray-900">Anna Papadopoulou</p>
+            <p class="text-xs text-blue-600">Computer Science</p>
+          </div>
+        <% end %>
       </div>
 
-      <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
-        <div class="flex items-center gap-3 mb-3">
-          <div class="rounded-lg bg-green-100 p-2">
-            <svg class="h-6 w-6 text-green-600" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
-              <path stroke-linecap="round" stroke-linejoin="round" d="M18 18.72a9.094 9.094 0 0 0 3.741-.479 3 3 0 0 0-4.682-2.72m.94 3.198.001.031c0 .225-.012.447-.037.666A11.944 11.944 0 0 1 12 21c-2.17 0-4.207-.576-5.963-1.584A6.062 6.062 0 0 1 6 18.719m12 0a5.971 5.971 0 0 0-.941-3.197m0 0A5.995 5.995 0 0 0 12 12.75a5.995 5.995 0 0 0-5.058 2.772m0 0a3 3 0 0 0-4.681 2.72 8.986 8.986 0 0 0 3.74.477m.94-3.197a5.971 5.971 0 0 0-.94 3.197M15 6.75a3 3 0 1 1-6 0 3 3 0 0 1 6 0Zm6 3a2.25 2.25 0 1 1-4.5 0 2.25 2.25 0 0 1 4.5 0Zm-13.5 0a2.25 2.25 0 1 1-4.5 0 2.25 2.25 0 0 1 4.5 0Z" />
-            </svg>
-          </div>
-          <h3 class="text-lg font-semibold text-gray-900">Teams</h3>
+      <div class="bg-white rounded-xl shadow-sm border border-gray-200 border-l-4 border-l-green-600 p-5 flex flex-col justify-between">
+        <div>
+          <%= link_to "Quantum Mechanics Problem Set", assignment_path(2), class: "text-lg font-semibold text-gray-900 mb-2 block hover:text-blue-600 transition-colors" %>
+          <p class="text-sm text-gray-600 line-clamp-3">Solve the Schrodinger equation for a particle in a finite potential well. Show all derivations and plot the wave functions.</p>
         </div>
-        <p class="text-sm text-gray-600">Collaborate with your team members.</p>
+        <%= link_to profile_path(2), class: "flex items-center gap-3 mt-4 pt-4 border-t border-gray-100 hover:bg-gray-50 -mx-5 -mb-5 px-5 pb-5 pt-4 rounded-b-xl transition-colors" do %>
+          <div class="h-8 w-8 rounded-full bg-green-100 flex items-center justify-center text-xs font-medium text-green-700">NK</div>
+          <div>
+            <p class="text-sm font-medium text-gray-900">Nikos Karagiannis</p>
+            <p class="text-xs text-green-600">Physics</p>
+          </div>
+        <% end %>
       </div>
 
-      <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
-        <div class="flex items-center gap-3 mb-3">
-          <div class="rounded-lg bg-gray-100 p-2">
-            <svg class="h-6 w-6 text-gray-600" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
-              <path stroke-linecap="round" stroke-linejoin="round" d="M8.625 12a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Zm0 0H8.25m4.125 0a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Zm0 0H12m4.125 0a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Zm0 0h-.375M21 12c0 4.556-4.03 8.25-9 8.25a9.764 9.764 0 0 1-2.555-.337A5.972 5.972 0 0 1 5.41 20.97a5.969 5.969 0 0 1-.474-.065 4.48 4.48 0 0 0 .978-2.025c.09-.457-.133-.901-.467-1.226C3.93 16.178 3 14.189 3 12c0-4.556 4.03-8.25 9-8.25s9 3.694 9 8.25Z" />
-            </svg>
-          </div>
-          <h3 class="text-lg font-semibold text-gray-900">Messages</h3>
+      <div class="bg-white rounded-xl shadow-sm border border-gray-200 border-l-4 border-l-purple-600 p-5 flex flex-col justify-between">
+        <div>
+          <%= link_to "Linear Algebra Proofs", assignment_path(3), class: "text-lg font-semibold text-gray-900 mb-2 block hover:text-blue-600 transition-colors" %>
+          <p class="text-sm text-gray-600 line-clamp-3">Prove the Cayley-Hamilton theorem and demonstrate its applications in computing matrix powers and exponentials.</p>
         </div>
-        <p class="text-sm text-gray-600">Send and receive messages from your teams.</p>
+        <%= link_to profile_path(3), class: "flex items-center gap-3 mt-4 pt-4 border-t border-gray-100 hover:bg-gray-50 -mx-5 -mb-5 px-5 pb-5 pt-4 rounded-b-xl transition-colors" do %>
+          <div class="h-8 w-8 rounded-full bg-purple-100 flex items-center justify-center text-xs font-medium text-purple-700">EV</div>
+          <div>
+            <p class="text-sm font-medium text-gray-900">Elena Vlachou</p>
+            <p class="text-xs text-purple-600">Math</p>
+          </div>
+        <% end %>
       </div>
+
+      <div class="bg-white rounded-xl shadow-sm border border-gray-200 border-l-4 border-l-yellow-600 p-5 flex flex-col justify-between">
+        <div>
+          <%= link_to "Organic Chemistry Lab Report", assignment_path(4), class: "text-lg font-semibold text-gray-900 mb-2 block hover:text-blue-600 transition-colors" %>
+          <p class="text-sm text-gray-600 line-clamp-3">Synthesize aspirin from salicylic acid and acetic anhydride. Document the procedure, observations, and yield calculations.</p>
+        </div>
+        <%= link_to profile_path(4), class: "flex items-center gap-3 mt-4 pt-4 border-t border-gray-100 hover:bg-gray-50 -mx-5 -mb-5 px-5 pb-5 pt-4 rounded-b-xl transition-colors" do %>
+          <div class="h-8 w-8 rounded-full bg-yellow-100 flex items-center justify-center text-xs font-medium text-yellow-700">DM</div>
+          <div>
+            <p class="text-sm font-medium text-gray-900">Dimitris Makris</p>
+            <p class="text-xs text-yellow-600">Chemistry</p>
+          </div>
+        <% end %>
+      </div>
+
+      <div class="bg-white rounded-xl shadow-sm border border-gray-200 border-l-4 border-l-blue-600 p-5 flex flex-col justify-between">
+        <div>
+          <%= link_to "REST API Design", assignment_path(5), class: "text-lg font-semibold text-gray-900 mb-2 block hover:text-blue-600 transition-colors" %>
+          <p class="text-sm text-gray-600 line-clamp-3">Design and document a RESTful API for an e-commerce platform. Include authentication, pagination, and error handling patterns.</p>
+        </div>
+        <%= link_to profile_path(5), class: "flex items-center gap-3 mt-4 pt-4 border-t border-gray-100 hover:bg-gray-50 -mx-5 -mb-5 px-5 pb-5 pt-4 rounded-b-xl transition-colors" do %>
+          <div class="h-8 w-8 rounded-full bg-blue-100 flex items-center justify-center text-xs font-medium text-blue-700">GT</div>
+          <div>
+            <p class="text-sm font-medium text-gray-900">George Theodorou</p>
+            <p class="text-xs text-blue-600">Computer Science</p>
+          </div>
+        <% end %>
+      </div>
+
+      <div class="bg-white rounded-xl shadow-sm border border-gray-200 border-l-4 border-l-green-600 p-5 flex flex-col justify-between">
+        <div>
+          <%= link_to "Thermodynamics Analysis", assignment_path(6), class: "text-lg font-semibold text-gray-900 mb-2 block hover:text-blue-600 transition-colors" %>
+          <p class="text-sm text-gray-600 line-clamp-3">Analyze the Carnot cycle efficiency for a heat engine operating between two thermal reservoirs. Compare with real-world engines.</p>
+        </div>
+        <%= link_to profile_path(6), class: "flex items-center gap-3 mt-4 pt-4 border-t border-gray-100 hover:bg-gray-50 -mx-5 -mb-5 px-5 pb-5 pt-4 rounded-b-xl transition-colors" do %>
+          <div class="h-8 w-8 rounded-full bg-green-100 flex items-center justify-center text-xs font-medium text-green-700">ML</div>
+          <div>
+            <p class="text-sm font-medium text-gray-900">Maria Lazaridou</p>
+            <p class="text-xs text-green-600">Physics</p>
+          </div>
+        <% end %>
+      </div>
+
+      <div class="bg-white rounded-xl shadow-sm border border-gray-200 border-l-4 border-l-purple-600 p-5 flex flex-col justify-between">
+        <div>
+          <%= link_to "Differential Equations Assignment", assignment_path(7), class: "text-lg font-semibold text-gray-900 mb-2 block hover:text-blue-600 transition-colors" %>
+          <p class="text-sm text-gray-600 line-clamp-3">Solve systems of first-order ODEs using matrix methods. Apply eigenvalue decomposition to find general solutions.</p>
+        </div>
+        <%= link_to profile_path(7), class: "flex items-center gap-3 mt-4 pt-4 border-t border-gray-100 hover:bg-gray-50 -mx-5 -mb-5 px-5 pb-5 pt-4 rounded-b-xl transition-colors" do %>
+          <div class="h-8 w-8 rounded-full bg-purple-100 flex items-center justify-center text-xs font-medium text-purple-700">KS</div>
+          <div>
+            <p class="text-sm font-medium text-gray-900">Kostas Stavridis</p>
+            <p class="text-xs text-purple-600">Math</p>
+          </div>
+        <% end %>
+      </div>
+
+      <div class="bg-white rounded-xl shadow-sm border border-gray-200 border-l-4 border-l-yellow-600 p-5 flex flex-col justify-between">
+        <div>
+          <%= link_to "Inorganic Chemistry Review", assignment_path(8), class: "text-lg font-semibold text-gray-900 mb-2 block hover:text-blue-600 transition-colors" %>
+          <p class="text-sm text-gray-600 line-clamp-3">Compare the bonding theories for transition metal complexes. Discuss crystal field theory versus molecular orbital theory.</p>
+        </div>
+        <%= link_to profile_path(8), class: "flex items-center gap-3 mt-4 pt-4 border-t border-gray-100 hover:bg-gray-50 -mx-5 -mb-5 px-5 pb-5 pt-4 rounded-b-xl transition-colors" do %>
+          <div class="h-8 w-8 rounded-full bg-yellow-100 flex items-center justify-center text-xs font-medium text-yellow-700">IN</div>
+          <div>
+            <p class="text-sm font-medium text-gray-900">Ioanna Nikolaou</p>
+            <p class="text-xs text-yellow-600">Chemistry</p>
+          </div>
+        <% end %>
+      </div>
+
     </div>
   </div>
 <% else %>

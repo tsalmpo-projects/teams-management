@@ -1,6 +1,12 @@
 Rails.application.routes.draw do
   devise_for :users, controllers: { omniauth_callbacks: 'users/omniauth_callbacks' }
   get "home/index"
+  get "assignments", to: "assignments#index", as: :my_assignments
+  get "assignments/new", to: "assignments#new", as: :new_assignment
+  get "assignments/:id", to: "assignments#show", as: :assignment
+  get "teams", to: "teams#index", as: :teams
+  get "messages", to: "messages#index", as: :messages
+  get "profiles/:id", to: "profiles#show", as: :profile
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 
   # Reveal health status on /up that returns 200 if the app boots with no exceptions, otherwise 500.

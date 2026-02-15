@@ -1,0 +1,85 @@
+<%
+  assignments = {
+    "1" => { title: "Database Normalization Project", subject: "Computer Science", body: "Design and implement a fully normalized relational database schema for a university library system. Include ER diagrams and SQL scripts.\n\nThe project should cover:\n- Entity-Relationship diagram with all entities, attributes, and relationships\n- Normalization from UNF through BCNF with step-by-step decomposition\n- SQL DDL scripts for creating all tables with appropriate constraints\n- Sample INSERT statements to populate the database\n- At least 5 complex queries demonstrating joins, aggregations, and subqueries", author: "Anna Papadopoulou", initials: "AP", color: "blue", author_id: "1", posted: "2 days ago", status: "Active" },
+    "2" => { title: "Quantum Mechanics Problem Set", subject: "Physics", body: "Solve the Schrodinger equation for a particle in a finite potential well. Show all derivations and plot the wave functions.\n\nProblems include:\n- Time-independent Schrodinger equation for symmetric finite well\n- Graphical and numerical solutions for bound state energies\n- Normalized wave functions for first three energy levels\n- Comparison with infinite potential well solutions\n- Tunneling probability calculations for a rectangular barrier", author: "Nikos Karagiannis", initials: "NK", color: "green", author_id: "2", posted: "3 days ago", status: "Active" },
+    "3" => { title: "Linear Algebra Proofs", subject: "Math", body: "Prove the Cayley-Hamilton theorem and demonstrate its applications in computing matrix powers and exponentials.\n\nDeliverables:\n- Rigorous proof of the Cayley-Hamilton theorem for n x n matrices\n- Application to computing A^k for large k using polynomial reduction\n- Matrix exponential computation via Cayley-Hamilton\n- Three worked examples with 2x2 and 3x3 matrices\n- Discussion of computational advantages over direct methods", author: "Elena Vlachou", initials: "EV", color: "purple", author_id: "3", posted: "4 days ago", status: "Active" },
+    "4" => { title: "Organic Chemistry Lab Report", subject: "Chemistry", body: "Synthesize aspirin from salicylic acid and acetic anhydride. Document the procedure, observations, and yield calculations.\n\nReport sections:\n- Introduction with reaction mechanism and background theory\n- Materials list and detailed experimental procedure\n- Observations including melting point determination and purity tests\n- Yield calculations (theoretical vs actual) with percent yield\n- Discussion of sources of error and possible improvements", author: "Dimitris Makris", initials: "DM", color: "yellow", author_id: "4", posted: "5 days ago", status: "Active" },
+    "5" => { title: "REST API Design", subject: "Computer Science", body: "Design and document a RESTful API for an e-commerce platform. Include authentication, pagination, and error handling patterns.\n\nRequirements:\n- OpenAPI/Swagger specification for all endpoints\n- JWT-based authentication and authorization scheme\n- Cursor-based pagination for collection endpoints\n- Consistent error response format with error codes\n- Rate limiting strategy and CORS configuration", author: "George Theodorou", initials: "GT", color: "blue", author_id: "5", posted: "5 days ago", status: "Active" },
+    "6" => { title: "Thermodynamics Analysis", subject: "Physics", body: "Analyze the Carnot cycle efficiency for a heat engine operating between two thermal reservoirs. Compare with real-world engines.\n\nAnalysis should include:\n- Derivation of Carnot efficiency from first and second laws\n- P-V and T-S diagrams for ideal Carnot cycle\n- Comparison with Otto, Diesel, and Rankine cycles\n- Real-world efficiency data for modern engines\n- Discussion of entropy generation and irreversibilities", author: "Maria Lazaridou", initials: "ML", color: "green", author_id: "6", posted: "6 days ago", status: "Active" },
+    "7" => { title: "Differential Equations Assignment", subject: "Math", body: "Solve systems of first-order ODEs using matrix methods. Apply eigenvalue decomposition to find general solutions.\n\nProblems:\n- Solve 2x2 and 3x3 linear ODE systems with distinct real eigenvalues\n- Systems with complex conjugate eigenvalues — spiral and center behavior\n- Repeated eigenvalue cases with generalized eigenvectors\n- Phase portrait sketching for all solution types\n- Stability classification of equilibrium points", author: "Kostas Stavridis", initials: "KS", color: "purple", author_id: "7", posted: "8 days ago", status: "Active" },
+    "8" => { title: "Inorganic Chemistry Review", subject: "Chemistry", body: "Compare the bonding theories for transition metal complexes. Discuss crystal field theory versus molecular orbital theory.\n\nTopics to cover:\n- Crystal field splitting in octahedral and tetrahedral geometries\n- Spectrochemical series and factors affecting splitting energy\n- Molecular orbital diagrams for representative complexes\n- Magnetism predictions: high-spin vs low-spin configurations\n- Color and UV-Vis spectroscopy of coordination compounds", author: "Ioanna Nikolaou", initials: "IN", color: "yellow", author_id: "8", posted: "10 days ago", status: "Active" }
+  }
+  a = assignments[params[:id]] || assignments["1"]
+%>
+
+<div class="py-6">
+  <div class="max-w-3xl mx-auto">
+
+    <%# Back link %>
+    <div class="mb-6">
+      <%= link_to root_path, class: "inline-flex items-center gap-1 text-sm text-gray-500 hover:text-gray-700 transition-colors" do %>
+        <svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M10.5 19.5 3 12m0 0 7.5-7.5M3 12h18" />
+        </svg>
+        Back to assignments
+      <% end %>
+    </div>
+
+    <%# Assignment card %>
+    <div class="bg-white rounded-xl shadow-sm border border-gray-200 border-l-4 border-l-<%= a[:color] %>-600 overflow-hidden">
+
+      <div class="p-6 sm:p-8">
+        <%# Header %>
+        <div class="flex items-start justify-between gap-4 mb-6">
+          <div>
+            <h1 class="text-2xl font-bold text-gray-900 mb-2"><%= a[:title] %></h1>
+            <div class="flex items-center gap-3 flex-wrap">
+              <span class="inline-flex items-center rounded-full bg-<%= a[:color] %>-100 px-3 py-0.5 text-sm font-medium text-<%= a[:color] %>-700"><%= a[:subject] %></span>
+              <span class="text-sm text-gray-500">Posted <%= a[:posted] %></span>
+              <span class="inline-flex items-center rounded-full bg-green-100 px-2.5 py-0.5 text-xs font-medium text-green-700"><%= a[:status] %></span>
+            </div>
+          </div>
+        </div>
+
+        <%# Body %>
+        <div class="prose prose-sm max-w-none text-gray-700 mb-8">
+          <% a[:body].split("\n").each do |line| %>
+            <% if line.start_with?("- ") %>
+              <p class="flex items-start gap-2 ml-2 mb-1">
+                <span class="text-gray-400 mt-0.5">&bull;</span>
+                <span><%= line[2..] %></span>
+              </p>
+            <% elsif line.blank? %>
+              <br>
+            <% else %>
+              <p class="mb-3"><%= line %></p>
+            <% end %>
+          <% end %>
+        </div>
+
+        <%# Author section %>
+        <div class="border-t border-gray-200 pt-6 mb-6">
+          <p class="text-xs font-medium text-gray-500 uppercase tracking-wider mb-3">Posted by</p>
+          <%= link_to profile_path(a[:author_id]), class: "inline-flex items-center gap-3 hover:bg-gray-50 -ml-2 px-2 py-1.5 rounded-lg transition-colors" do %>
+            <div class="h-10 w-10 rounded-full bg-<%= a[:color] %>-100 flex items-center justify-center text-sm font-medium text-<%= a[:color] %>-700"><%= a[:initials] %></div>
+            <div>
+              <p class="text-sm font-medium text-gray-900"><%= a[:author] %></p>
+              <p class="text-xs text-<%= a[:color] %>-600"><%= a[:subject] %></p>
+            </div>
+          <% end %>
+        </div>
+
+        <%# Action button %>
+        <div class="border-t border-gray-200 pt-6">
+          <button class="inline-flex items-center gap-2 rounded-lg bg-blue-600 px-5 py-2.5 text-sm font-medium text-white hover:bg-blue-700 transition-colors cursor-pointer">
+            <svg class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M18 7.5v3m0 0v3m0-3h3m-3 0h-3m-2.25-4.125a3.375 3.375 0 1 1-6.75 0 3.375 3.375 0 0 1 6.75 0ZM3 19.235v-.11a6.375 6.375 0 0 1 12.75 0v.109A12.318 12.318 0 0 1 9.374 21c-2.331 0-4.512-.645-6.374-1.766Z" />
+            </svg>
+            Request to Join Assignment
+          </button>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
