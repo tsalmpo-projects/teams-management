@@ -1,7 +1,23 @@
-<header>
-    <nav class="flex sticky top-0 flex-row justify-between">
-        <div>1</div>
-        <div>1</div>
-        <div>1</div>
-    </nav>
+<header class="bg-white shadow-sm border-b border-gray-200 sticky top-0 z-50">
+  <nav class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+    <div class="flex h-16 items-center justify-between">
+      <div class="flex items-center">
+        <%= link_to root_path, class: "text-xl font-bold text-gray-900 hover:text-gray-700 transition-colors" do %>
+          Teams Management
+        <% end %>
+      </div>
+
+      <div class="flex items-center gap-4">
+        <% if user_signed_in? %>
+          <%= link_to "Dashboard", root_path, class: "text-sm font-medium text-gray-600 hover:text-gray-900 transition-colors" %>
+          <span class="text-sm text-gray-500"><%= current_user.email %></span>
+          <%= link_to "Edit Profile", edit_user_registration_path, class: "text-sm font-medium text-gray-600 hover:text-gray-900 transition-colors" %>
+          <%= button_to "Sign Out", destroy_user_session_path, method: :delete, class: "text-sm font-medium text-red-600 hover:text-red-700 transition-colors cursor-pointer" %>
+        <% else %>
+          <%= link_to "Sign In", new_user_session_path, class: "text-sm font-medium text-gray-600 hover:text-gray-900 transition-colors" %>
+          <%= link_to "Sign Up", new_user_registration_path, class: "rounded-lg bg-blue-600 px-4 py-2 text-sm font-medium text-white hover:bg-blue-700 transition-colors" %>
+        <% end %>
+      </div>
+    </div>
+  </nav>
 </header>
