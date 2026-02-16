@@ -8,7 +8,12 @@ Rails.application.routes.draw do
   end
 
   get "teams", to: "teams#index", as: :teams
+  get "teams/:team_id/messages", to: "messages#team_show", as: :team_conversation
+  post "teams/:team_id/messages", to: "messages#team_create", as: :send_team_message
   get "messages", to: "messages#index", as: :messages
+  get "messages/:user_id", to: "messages#show", as: :conversation
+  post "messages/:user_id", to: "messages#create", as: :send_message
+  patch "messages/:id/read", to: "messages#mark_read", as: :read_message
   get "profiles/:id", to: "profiles#show", as: :profile
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 

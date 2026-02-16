@@ -7,160 +7,16 @@
     <div class="p-4 border-b border-gray-200">
       <h2 class="text-lg font-semibold text-gray-900">Messages</h2>
     </div>
-    <div class="overflow-y-auto flex-1">
-
-      <%# Active conversation %>
-      <div class="flex items-start gap-3 p-4 bg-blue-50 border-l-4 border-l-blue-600 cursor-pointer">
-        <div class="h-10 w-10 rounded-full bg-blue-100 flex items-center justify-center shrink-0">
-          <svg class="h-5 w-5 text-blue-600" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
-            <path stroke-linecap="round" stroke-linejoin="round" d="M18 18.72a9.094 9.094 0 0 0 3.741-.479 3 3 0 0 0-4.682-2.72m.94 3.198.001.031c0 .225-.012.447-.037.666A11.944 11.944 0 0 1 12 21c-2.17 0-4.207-.576-5.963-1.584A6.062 6.062 0 0 1 6 18.719m12 0a5.971 5.971 0 0 0-.941-3.197m0 0A5.995 5.995 0 0 0 12 12.75a5.995 5.995 0 0 0-5.058 2.772m0 0a3 3 0 0 0-4.681 2.72 8.986 8.986 0 0 0 3.74.477m.94-3.197a5.971 5.971 0 0 0-.94 3.197M15 6.75a3 3 0 1 1-6 0 3 3 0 0 1 6 0Zm6 3a2.25 2.25 0 1 1-4.5 0 2.25 2.25 0 0 1 4.5 0Zm-13.5 0a2.25 2.25 0 1 1-4.5 0 2.25 2.25 0 0 1 4.5 0Z" />
-          </svg>
-        </div>
-        <div class="min-w-0">
-          <p class="text-sm font-semibold text-gray-900 truncate">Database Normalization Project</p>
-          <p class="text-xs text-gray-500 truncate">Anna: I uploaded the ER diagram</p>
-        </div>
-      </div>
-
-      <div class="flex items-start gap-3 p-4 hover:bg-gray-50 cursor-pointer border-l-4 border-l-transparent">
-        <div class="h-10 w-10 rounded-full bg-green-100 flex items-center justify-center shrink-0">
-          <svg class="h-5 w-5 text-green-600" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
-            <path stroke-linecap="round" stroke-linejoin="round" d="M18 18.72a9.094 9.094 0 0 0 3.741-.479 3 3 0 0 0-4.682-2.72m.94 3.198.001.031c0 .225-.012.447-.037.666A11.944 11.944 0 0 1 12 21c-2.17 0-4.207-.576-5.963-1.584A6.062 6.062 0 0 1 6 18.719m12 0a5.971 5.971 0 0 0-.941-3.197m0 0A5.995 5.995 0 0 0 12 12.75a5.995 5.995 0 0 0-5.058 2.772m0 0a3 3 0 0 0-4.681 2.72 8.986 8.986 0 0 0 3.74.477m.94-3.197a5.971 5.971 0 0 0-.94 3.197M15 6.75a3 3 0 1 1-6 0 3 3 0 0 1 6 0Zm6 3a2.25 2.25 0 1 1-4.5 0 2.25 2.25 0 0 1 4.5 0Zm-13.5 0a2.25 2.25 0 1 1-4.5 0 2.25 2.25 0 0 1 4.5 0Z" />
-          </svg>
-        </div>
-        <div class="min-w-0">
-          <p class="text-sm font-semibold text-gray-900 truncate">Quantum Mechanics Problem Set</p>
-          <p class="text-xs text-gray-500 truncate">Dimitris: Let me check the equations</p>
-        </div>
-      </div>
-
-      <div class="flex items-start gap-3 p-4 hover:bg-gray-50 cursor-pointer border-l-4 border-l-transparent">
-        <div class="h-10 w-10 rounded-full bg-purple-100 flex items-center justify-center text-sm font-medium text-purple-700 shrink-0">EV</div>
-        <div class="min-w-0">
-          <p class="text-sm font-semibold text-gray-900 truncate">Elena Vlachou</p>
-          <p class="text-xs text-gray-500 truncate">Can you share your notes from today?</p>
-        </div>
-      </div>
-
-      <div class="flex items-start gap-3 p-4 hover:bg-gray-50 cursor-pointer border-l-4 border-l-transparent">
-        <div class="h-10 w-10 rounded-full bg-yellow-100 flex items-center justify-center shrink-0">
-          <svg class="h-5 w-5 text-yellow-600" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
-            <path stroke-linecap="round" stroke-linejoin="round" d="M18 18.72a9.094 9.094 0 0 0 3.741-.479 3 3 0 0 0-4.682-2.72m.94 3.198.001.031c0 .225-.012.447-.037.666A11.944 11.944 0 0 1 12 21c-2.17 0-4.207-.576-5.963-1.584A6.062 6.062 0 0 1 6 18.719m12 0a5.971 5.971 0 0 0-.941-3.197m0 0A5.995 5.995 0 0 0 12 12.75a5.995 5.995 0 0 0-5.058 2.772m0 0a3 3 0 0 0-4.681 2.72 8.986 8.986 0 0 0 3.74.477m.94-3.197a5.971 5.971 0 0 0-.94 3.197M15 6.75a3 3 0 1 1-6 0 3 3 0 0 1 6 0Zm6 3a2.25 2.25 0 1 1-4.5 0 2.25 2.25 0 0 1 4.5 0Zm-13.5 0a2.25 2.25 0 1 1-4.5 0 2.25 2.25 0 0 1 4.5 0Z" />
-          </svg>
-        </div>
-        <div class="min-w-0">
-          <p class="text-sm font-semibold text-gray-900 truncate">Organic Chemistry Lab Report</p>
-          <p class="text-xs text-gray-500 truncate">Kostas: The yield was about 78%</p>
-        </div>
-      </div>
-
-      <div class="flex items-start gap-3 p-4 hover:bg-gray-50 cursor-pointer border-l-4 border-l-transparent">
-        <div class="h-10 w-10 rounded-full bg-blue-100 flex items-center justify-center text-sm font-medium text-blue-700 shrink-0">GT</div>
-        <div class="min-w-0">
-          <p class="text-sm font-semibold text-gray-900 truncate">George Theodorou</p>
-          <p class="text-xs text-gray-500 truncate">Are you free tomorrow for a study session?</p>
-        </div>
-      </div>
-
-    </div>
+    <%= render "messages/conversation_list" %>
   </div>
 
-  <%# Right panel — active chat %>
-  <div class="flex-1 flex flex-col min-w-0 bg-white">
-
-    <%# Chat header %>
-    <div class="p-4 border-b border-gray-200 flex items-center gap-3">
-      <div class="h-10 w-10 rounded-full bg-blue-100 flex items-center justify-center shrink-0">
-        <svg class="h-5 w-5 text-blue-600" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
-          <path stroke-linecap="round" stroke-linejoin="round" d="M18 18.72a9.094 9.094 0 0 0 3.741-.479 3 3 0 0 0-4.682-2.72m.94 3.198.001.031c0 .225-.012.447-.037.666A11.944 11.944 0 0 1 12 21c-2.17 0-4.207-.576-5.963-1.584A6.062 6.062 0 0 1 6 18.719m12 0a5.971 5.971 0 0 0-.941-3.197m0 0A5.995 5.995 0 0 0 12 12.75a5.995 5.995 0 0 0-5.058 2.772m0 0a3 3 0 0 0-4.681 2.72 8.986 8.986 0 0 0 3.74.477m.94-3.197a5.971 5.971 0 0 0-.94 3.197M15 6.75a3 3 0 1 1-6 0 3 3 0 0 1 6 0Zm6 3a2.25 2.25 0 1 1-4.5 0 2.25 2.25 0 0 1 4.5 0Zm-13.5 0a2.25 2.25 0 1 1-4.5 0 2.25 2.25 0 0 1 4.5 0Z" />
-        </svg>
-      </div>
-      <div>
-        <h3 class="text-sm font-semibold text-gray-900">Database Normalization Project</h3>
-        <p class="text-xs text-gray-500">Anna Papadopoulou, Nikos Karagiannis, You</p>
-      </div>
+  <%# Right panel — empty state %>
+  <div class="flex-1 flex items-center justify-center bg-gray-50">
+    <div class="text-center">
+      <svg class="h-12 w-12 text-gray-300 mx-auto mb-3" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+        <path stroke-linecap="round" stroke-linejoin="round" d="M8.625 12a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Zm0 0H8.25m4.125 0a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Zm0 0H12m4.125 0a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Zm0 0h-.375M21 12c0 4.556-4.03 8.25-9 8.25a9.764 9.764 0 0 1-2.555-.337A5.972 5.972 0 0 1 5.41 20.97a5.969 5.969 0 0 1-.474-.065 4.48 4.48 0 0 0 .978-2.025c.09-.457-.133-.901-.467-1.226C3.93 16.178 3 14.189 3 12c0-4.556 4.03-8.25 9-8.25s9 3.694 9 8.25Z" />
+      </svg>
+      <p class="text-sm text-gray-500">Select a conversation to start messaging.</p>
     </div>
-
-    <%# Messages area %>
-    <div class="flex-1 overflow-y-auto p-6 space-y-4 bg-gray-50">
-
-      <%# Other person's message %>
-      <div class="flex items-start gap-2.5 max-w-lg">
-        <div class="h-8 w-8 rounded-full bg-blue-100 flex items-center justify-center text-xs font-medium text-blue-700 shrink-0">AP</div>
-        <div>
-          <div class="bg-white rounded-2xl rounded-tl-sm px-4 py-2.5 shadow-sm">
-            <p class="text-sm text-gray-900">Hey team! I started working on the ER diagram for the library system. Should we meet tomorrow to discuss the schema?</p>
-          </div>
-          <p class="text-xs text-gray-400 mt-1 ml-1">Anna &middot; 2:30 PM</p>
-        </div>
-      </div>
-
-      <%# Other person's message %>
-      <div class="flex items-start gap-2.5 max-w-lg">
-        <div class="h-8 w-8 rounded-full bg-green-100 flex items-center justify-center text-xs font-medium text-green-700 shrink-0">NK</div>
-        <div>
-          <div class="bg-white rounded-2xl rounded-tl-sm px-4 py-2.5 shadow-sm">
-            <p class="text-sm text-gray-900">Sounds good! I can do after 3 PM. I've been reading about 3NF vs BCNF — we should decide which to target.</p>
-          </div>
-          <p class="text-xs text-gray-400 mt-1 ml-1">Nikos &middot; 2:45 PM</p>
-        </div>
-      </div>
-
-      <%# Your message %>
-      <div class="flex items-start gap-2.5 max-w-lg ml-auto flex-row-reverse">
-        <div class="h-8 w-8 rounded-full bg-gray-200 flex items-center justify-center text-xs font-medium text-gray-700 shrink-0">You</div>
-        <div>
-          <div class="bg-blue-600 rounded-2xl rounded-tr-sm px-4 py-2.5 shadow-sm">
-            <p class="text-sm text-white">I think BCNF would be better for this project. Let's aim for 3:30 PM in the library study room.</p>
-          </div>
-          <p class="text-xs text-gray-400 mt-1 mr-1 text-right">You &middot; 3:00 PM</p>
-        </div>
-      </div>
-
-      <%# Other person's message %>
-      <div class="flex items-start gap-2.5 max-w-lg">
-        <div class="h-8 w-8 rounded-full bg-blue-100 flex items-center justify-center text-xs font-medium text-blue-700 shrink-0">AP</div>
-        <div>
-          <div class="bg-white rounded-2xl rounded-tl-sm px-4 py-2.5 shadow-sm">
-            <p class="text-sm text-gray-900">Perfect! I uploaded the ER diagram to our shared folder. Take a look before the meeting.</p>
-          </div>
-          <p class="text-xs text-gray-400 mt-1 ml-1">Anna &middot; 3:15 PM</p>
-        </div>
-      </div>
-
-      <%# Your message %>
-      <div class="flex items-start gap-2.5 max-w-lg ml-auto flex-row-reverse">
-        <div class="h-8 w-8 rounded-full bg-gray-200 flex items-center justify-center text-xs font-medium text-gray-700 shrink-0">You</div>
-        <div>
-          <div class="bg-blue-600 rounded-2xl rounded-tr-sm px-4 py-2.5 shadow-sm">
-            <p class="text-sm text-white">Great, I'll review it. Also, should we include the borrowing history as a separate table or embed it?</p>
-          </div>
-          <p class="text-xs text-gray-400 mt-1 mr-1 text-right">You &middot; 3:20 PM</p>
-        </div>
-      </div>
-
-      <%# Other person's message %>
-      <div class="flex items-start gap-2.5 max-w-lg">
-        <div class="h-8 w-8 rounded-full bg-green-100 flex items-center justify-center text-xs font-medium text-green-700 shrink-0">NK</div>
-        <div>
-          <div class="bg-white rounded-2xl rounded-tl-sm px-4 py-2.5 shadow-sm">
-            <p class="text-sm text-gray-900">Separate table for sure — it's a many-to-many relationship. I'll prepare some SQL scripts as examples.</p>
-          </div>
-          <p class="text-xs text-gray-400 mt-1 ml-1">Nikos &middot; 3:25 PM</p>
-        </div>
-      </div>
-
-    </div>
-
-    <%# Input bar %>
-    <div class="p-4 border-t border-gray-200">
-      <div class="flex items-end gap-3">
-        <textarea rows="1" placeholder="Type a message..." oninput="this.style.height = 'auto'; this.style.height = Math.min(this.scrollHeight, 160) + 'px'" class="flex-1 rounded-lg border border-gray-300 px-4 py-2.5 text-sm text-gray-900 placeholder-gray-400 focus:border-blue-500 focus:ring-1 focus:ring-blue-500 outline-none resize-none overflow-y-auto" style="max-height: 10rem"></textarea>
-        <button class="rounded-lg bg-blue-600 px-4 py-2.5 text-sm font-medium text-white hover:bg-blue-700 transition-colors cursor-pointer shrink-0">
-          Send
-        </button>
-      </div>
-    </div>
-
   </div>
 </div>

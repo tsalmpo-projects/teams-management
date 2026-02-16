@@ -23,7 +23,8 @@
     <%= javascript_importmap_tags %>
   </head>
 
-  <body class="bg-gray-50 flex flex-col <%= content_for?(:fullscreen) ? 'h-screen overflow-hidden' : 'min-h-screen' %>">
+  <body class="bg-gray-50 flex flex-col <%= content_for?(:fullscreen) ? 'h-screen overflow-hidden' : 'min-h-screen' %>"
+    <% if user_signed_in? %>data-controller="notification" data-notification-user-id-value="<%= current_user.id %>"<% end %>>
     <%= render 'layouts/header' %>
 
     <% if notice.present? %>
@@ -45,5 +46,9 @@
     <main class="flex-1 <%= content_for?(:fullscreen) ? 'flex flex-col overflow-hidden' : 'mx-auto max-w-7xl w-full px-4 sm:px-6 lg:px-8 py-8' %>">
       <%= yield %>
     </main>
+
+    <% if user_signed_in? %>
+      <div data-notification-target="container" class="fixed top-20 right-4 z-50 flex flex-col gap-3"></div>
+    <% end %>
   </body>
 </html>

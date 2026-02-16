@@ -1,6 +1,4 @@
 <%
-  dept_colors = { "computer_science" => "blue", "physics" => "green", "math" => "purple", "chemistry" => "yellow" }
-  status_colors = { "published" => "gray", "in_process" => "blue", "completed" => "green" }
   status_badge_classes = {
     "published"  => "bg-gray-100 text-gray-700",
     "in_process" => "bg-blue-100 text-blue-700",
@@ -52,8 +50,8 @@
   <% if @assignments.any? %>
     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
       <% @assignments.each do |assignment| %>
-        <% color = dept_colors[assignment.subject] || "blue" %>
-        <div class="bg-white rounded-xl shadow-sm border border-gray-200 border-l-4 border-l-<%= color %>-600 p-5 flex flex-col justify-between">
+        <% sc = subject_classes(assignment.subject) %>
+        <div class="bg-white rounded-xl shadow-sm border border-gray-200 border-l-4 <%= sc[:border] %> p-5 flex flex-col justify-between">
           <div>
             <%= link_to assignment.title, assignment_path(assignment), class: "text-lg font-semibold text-gray-900 mb-2 block hover:text-blue-600 transition-colors" %>
             <p class="text-sm text-gray-600 line-clamp-3"><%= assignment.body %></p>

@@ -60,6 +60,14 @@ class AssignmentsController < ApplicationController
       assignment: assignment,
       content: "#{name} requests to join a team"
     )
+
+    ActionCable.server.broadcast("notifications_#{assignment.user_id}", {
+      type: "join_request",
+      sender_name: name,
+      assignment_title: assignment.title.truncate(40),
+      assignment_url: assignment_path(assignment)
+    })
+
     redirect_to assignment, notice: "Join request sent!"
   end
 
