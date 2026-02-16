@@ -1,5 +1,32 @@
+<%
+  dept_colors = { "computer_science" => "blue", "physics" => "green", "math" => "purple", "chemistry" => "yellow" }
+  status_colors = { "published" => "gray", "in_process" => "blue", "completed" => "green" }
+  status_badge_classes = {
+    "published"  => "bg-gray-100 text-gray-700",
+    "in_process" => "bg-blue-100 text-blue-700",
+    "completed"  => "bg-green-100 text-green-700"
+  }
+  status_active_classes = {
+    nil          => "bg-gray-900 text-white",
+    "published"  => "bg-gray-900 text-white",
+    "in_process" => "bg-blue-900 text-white",
+    "completed"  => "bg-green-900 text-white"
+  }
+  status_icons = {
+    "published"  => "M12 7.5h1.5m-1.5 3h1.5m-7.5 3h7.5m-7.5 3h7.5m3-9h3.375c.621 0 1.125.504 1.125 1.125V18a2.25 2.25 0 0 1-2.25 2.25M16.5 7.5V18a2.25 2.25 0 0 0 2.25 2.25M16.5 7.5V4.875c0-.621-.504-1.125-1.125-1.125H4.125C3.504 3.75 3 4.254 3 4.875V18a2.25 2.25 0 0 0 2.25 2.25h13.5M6 7.5h3v3H6v-3Z",
+    "in_process" => "M11.42 15.17 17.25 21A2.652 2.652 0 0 0 21 17.25l-5.877-5.877M11.42 15.17l2.496-3.03c.317-.384.74-.626 1.208-.766M11.42 15.17l-4.655 5.653a2.548 2.548 0 1 1-3.586-3.586l6.837-5.63m5.108-.233c.55-.164 1.163-.188 1.743-.14a4.5 4.5 0 0 0 4.486-6.336l-3.276 3.277a3.004 3.004 0 0 1-2.25-2.25l3.276-3.276a4.5 4.5 0 0 0-6.336 4.486c.091 1.076-.071 2.264-.904 2.95l-.102.085",
+    "completed"  => "M9 12.75 11.25 15 15 9.75M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"
+  }
+  filters = [
+    ["All", nil],
+    ["Published", "published"],
+    ["In Process", "in_process"],
+    ["Completed", "completed"]
+  ]
+%>
+
 <div class="py-6">
-  <div class="flex items-center justify-between mb-8">
+  <div class="flex items-center justify-between mb-6">
     <div>
       <h1 class="text-2xl font-bold text-gray-900 mb-1">My Assignments</h1>
       <p class="text-gray-600">Assignments you've posted for team formation.</p>
@@ -7,16 +34,40 @@
     <%= link_to "+ New Assignment", new_assignment_path, class: "rounded-lg bg-blue-600 px-4 py-2 text-sm font-medium text-white hover:bg-blue-700 transition-colors" %>
   </div>
 
+  <%# Status filter pills %>
+  <div class="flex flex-wrap gap-2 mb-8">
+    <% filters.each do |label, value| %>
+      <% active = params[:status] == value || (value.nil? && params[:status].blank?) %>
+      <%= link_to assignments_path(status: value), class: "inline-flex items-center gap-1.5 rounded-full px-4 py-1.5 text-sm font-medium transition-colors #{active ? status_active_classes[value] : "bg-gray-100 text-gray-600 hover:bg-gray-200"}" do %>
+        <% if value %>
+          <svg class="h-3.5 w-3.5" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" d="<%= status_icons[value] %>" />
+          </svg>
+        <% end %>
+        <%= label %>
+      <% end %>
+    <% end %>
+  </div>
+
   <% if @assignments.any? %>
     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
       <% @assignments.each do |assignment| %>
-        <div class="bg-white rounded-xl shadow-sm border border-gray-200 border-l-4 border-l-blue-600 p-5 flex flex-col justify-between">
+        <% color = dept_colors[assignment.subject] || "blue" %>
+        <div class="bg-white rounded-xl shadow-sm border border-gray-200 border-l-4 border-l-<%= color %>-600 p-5 flex flex-col justify-between">
           <div>
             <%= link_to assignment.title, assignment_path(assignment), class: "text-lg font-semibold text-gray-900 mb-2 block hover:text-blue-600 transition-colors" %>
             <p class="text-sm text-gray-600 line-clamp-3"><%= assignment.body %></p>
           </div>
           <div class="flex items-center justify-between mt-4 pt-4 border-t border-gray-100">
-            <span class="text-xs text-gray-500">Posted <%= time_ago_in_words(assignment.created_at) %> ago</span>
+            <div class="flex items-center gap-2">
+              <span class="inline-flex items-center gap-1 rounded-full px-2.5 py-0.5 text-xs font-medium <%= status_badge_classes[assignment.status] %>">
+                <svg class="h-3 w-3" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="<%= status_icons[assignment.status] %>" />
+                </svg>
+                <%= assignment.status&.titleize %>
+              </span>
+              <span class="text-xs text-gray-500"><%= time_ago_in_words(assignment.created_at) %> ago</span>
+            </div>
             <%= link_to assignment_path(assignment), data: { turbo_method: :delete, turbo_confirm: "Are you sure you want to delete this assignment?" }, class: "text-xs text-red-500 hover:text-red-700 transition-colors" do %>
               Delete
             <% end %>
@@ -26,8 +77,13 @@
     </div>
   <% else %>
     <div class="text-center py-12">
-      <p class="text-gray-500 mb-4">You haven't posted any assignments yet.</p>
-      <%= link_to "Create your first assignment", new_assignment_path, class: "text-sm font-medium text-blue-600 hover:text-blue-700 transition-colors" %>
+      <% if params[:status].present? %>
+        <p class="text-gray-500 mb-4">No <%= params[:status].titleize.downcase %> assignments.</p>
+        <%= link_to "View all assignments", assignments_path, class: "text-sm font-medium text-blue-600 hover:text-blue-700 transition-colors" %>
+      <% else %>
+        <p class="text-gray-500 mb-4">You haven't posted any assignments yet.</p>
+        <%= link_to "Create your first assignment", new_assignment_path, class: "text-sm font-medium text-blue-600 hover:text-blue-700 transition-colors" %>
+      <% end %>
     </div>
   <% end %>
 </div>

@@ -7,18 +7,24 @@ class User < ApplicationRecord
   enum :department, { computer_science: 0, physics: 1, math: 2, chemistry: 3 }
   has_many :assignment, dependent: :destroy
   has_many :contact, dependent: :destroy
+  has_many :sent_message, class_name: "Message", foreign_key: :sender_id, dependent: :destroy
+  has_many :received_message, class_name: "Message", foreign_key: :recipient_id, dependent: :destroy
   has_and_belongs_to_many :team, join_table: "team_members"
 
   def self.from_omniauth(access_token)
     data = access_token.info
     user = User.where(email: data['email']).first
 
-    unless user
+    if user
+      user.update(provider: access_token.provider, uid: access_token.uid) if user.provider.blank?
+    else
       user = User.create(
         firstname: data['first_name'],
         lastname: data['last_name'],
         password: Devise.friendly_token[0, 20],
-        email: data['email']
+        email: data['email'],
+        provider: access_token.provider,
+        uid: access_token.uid
       )
     end
     user

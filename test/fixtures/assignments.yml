@@ -3,9 +3,11 @@
 one:
   title: MyText
   body: MyText
+  subject: 0
   user: one
 
 two:
   title: MyText
   body: MyText
+  subject: 1
   user: two

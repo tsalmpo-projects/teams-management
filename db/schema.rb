@@ -10,10 +10,13 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_02_14_152425) do
+ActiveRecord::Schema[8.1].define(version: 2026_02_16_200958) do
   create_table "assignments", force: :cascade do |t|
     t.text "body"
     t.datetime "created_at", null: false
+    t.date "due_date"
+    t.integer "status", default: 0, null: false
+    t.integer "subject", null: false
     t.text "title"
     t.datetime "updated_at", null: false
     t.integer "user_id", null: false
@@ -33,6 +36,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_02_14_152425) do
     t.integer "assignment_id"
     t.text "content"
     t.datetime "created_at", null: false
+    t.boolean "declined"
     t.integer "recipient_id"
     t.integer "sender_id", null: false
     t.integer "team_id"
@@ -59,6 +63,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_02_14_152425) do
   end
 
   create_table "users", force: :cascade do |t|
+    t.text "bio"
     t.datetime "created_at", null: false
     t.integer "department"
     t.string "email", default: "", null: false

@@ -1,123 +1,59 @@
 <% if user_signed_in? %>
+  <%
+    dept_colors = { "computer_science" => "blue", "physics" => "green", "math" => "purple", "chemistry" => "yellow" }
+    subjects = [
+      ["All", nil],
+      ["Computer Science", "computer_science"],
+      ["Physics", "physics"],
+      ["Math", "math"],
+      ["Chemistry", "chemistry"]
+    ]
+  %>
+
   <div class="py-6">
     <h1 class="text-2xl font-bold text-gray-900 mb-1">Published Assignments</h1>
-    <p class="text-gray-600 mb-8">Browse assignments posted by students across all departments.</p>
+    <p class="text-gray-600 mb-6">Browse assignments posted by students across all departments.</p>
 
-    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
-
-      <div class="bg-white rounded-xl shadow-sm border border-gray-200 border-l-4 border-l-blue-600 p-5 flex flex-col justify-between">
-        <div>
-          <%= link_to "Database Normalization Project", assignment_path(1), class: "text-lg font-semibold text-gray-900 mb-2 block hover:text-blue-600 transition-colors" %>
-          <p class="text-sm text-gray-600 line-clamp-3">Design and implement a fully normalized relational database schema for a university library system. Include ER diagrams and SQL scripts.</p>
-        </div>
-        <%= link_to profile_path(1), class: "flex items-center gap-3 mt-4 pt-4 border-t border-gray-100 hover:bg-gray-50 -mx-5 -mb-5 px-5 pb-5 pt-4 rounded-b-xl transition-colors" do %>
-          <div class="h-8 w-8 rounded-full bg-blue-100 flex items-center justify-center text-xs font-medium text-blue-700">AP</div>
-          <div>
-            <p class="text-sm font-medium text-gray-900">Anna Papadopoulou</p>
-            <p class="text-xs text-blue-600">Computer Science</p>
-          </div>
-        <% end %>
-      </div>
-
-      <div class="bg-white rounded-xl shadow-sm border border-gray-200 border-l-4 border-l-green-600 p-5 flex flex-col justify-between">
-        <div>
-          <%= link_to "Quantum Mechanics Problem Set", assignment_path(2), class: "text-lg font-semibold text-gray-900 mb-2 block hover:text-blue-600 transition-colors" %>
-          <p class="text-sm text-gray-600 line-clamp-3">Solve the Schrodinger equation for a particle in a finite potential well. Show all derivations and plot the wave functions.</p>
-        </div>
-        <%= link_to profile_path(2), class: "flex items-center gap-3 mt-4 pt-4 border-t border-gray-100 hover:bg-gray-50 -mx-5 -mb-5 px-5 pb-5 pt-4 rounded-b-xl transition-colors" do %>
-          <div class="h-8 w-8 rounded-full bg-green-100 flex items-center justify-center text-xs font-medium text-green-700">NK</div>
-          <div>
-            <p class="text-sm font-medium text-gray-900">Nikos Karagiannis</p>
-            <p class="text-xs text-green-600">Physics</p>
-          </div>
-        <% end %>
-      </div>
-
-      <div class="bg-white rounded-xl shadow-sm border border-gray-200 border-l-4 border-l-purple-600 p-5 flex flex-col justify-between">
-        <div>
-          <%= link_to "Linear Algebra Proofs", assignment_path(3), class: "text-lg font-semibold text-gray-900 mb-2 block hover:text-blue-600 transition-colors" %>
-          <p class="text-sm text-gray-600 line-clamp-3">Prove the Cayley-Hamilton theorem and demonstrate its applications in computing matrix powers and exponentials.</p>
-        </div>
-        <%= link_to profile_path(3), class: "flex items-center gap-3 mt-4 pt-4 border-t border-gray-100 hover:bg-gray-50 -mx-5 -mb-5 px-5 pb-5 pt-4 rounded-b-xl transition-colors" do %>
-          <div class="h-8 w-8 rounded-full bg-purple-100 flex items-center justify-center text-xs font-medium text-purple-700">EV</div>
-          <div>
-            <p class="text-sm font-medium text-gray-900">Elena Vlachou</p>
-            <p class="text-xs text-purple-600">Math</p>
-          </div>
-        <% end %>
-      </div>
-
-      <div class="bg-white rounded-xl shadow-sm border border-gray-200 border-l-4 border-l-yellow-600 p-5 flex flex-col justify-between">
-        <div>
-          <%= link_to "Organic Chemistry Lab Report", assignment_path(4), class: "text-lg font-semibold text-gray-900 mb-2 block hover:text-blue-600 transition-colors" %>
-          <p class="text-sm text-gray-600 line-clamp-3">Synthesize aspirin from salicylic acid and acetic anhydride. Document the procedure, observations, and yield calculations.</p>
-        </div>
-        <%= link_to profile_path(4), class: "flex items-center gap-3 mt-4 pt-4 border-t border-gray-100 hover:bg-gray-50 -mx-5 -mb-5 px-5 pb-5 pt-4 rounded-b-xl transition-colors" do %>
-          <div class="h-8 w-8 rounded-full bg-yellow-100 flex items-center justify-center text-xs font-medium text-yellow-700">DM</div>
-          <div>
-            <p class="text-sm font-medium text-gray-900">Dimitris Makris</p>
-            <p class="text-xs text-yellow-600">Chemistry</p>
-          </div>
-        <% end %>
-      </div>
-
-      <div class="bg-white rounded-xl shadow-sm border border-gray-200 border-l-4 border-l-blue-600 p-5 flex flex-col justify-between">
-        <div>
-          <%= link_to "REST API Design", assignment_path(5), class: "text-lg font-semibold text-gray-900 mb-2 block hover:text-blue-600 transition-colors" %>
-          <p class="text-sm text-gray-600 line-clamp-3">Design and document a RESTful API for an e-commerce platform. Include authentication, pagination, and error handling patterns.</p>
-        </div>
-        <%= link_to profile_path(5), class: "flex items-center gap-3 mt-4 pt-4 border-t border-gray-100 hover:bg-gray-50 -mx-5 -mb-5 px-5 pb-5 pt-4 rounded-b-xl transition-colors" do %>
-          <div class="h-8 w-8 rounded-full bg-blue-100 flex items-center justify-center text-xs font-medium text-blue-700">GT</div>
-          <div>
-            <p class="text-sm font-medium text-gray-900">George Theodorou</p>
-            <p class="text-xs text-blue-600">Computer Science</p>
-          </div>
-        <% end %>
-      </div>
-
-      <div class="bg-white rounded-xl shadow-sm border border-gray-200 border-l-4 border-l-green-600 p-5 flex flex-col justify-between">
-        <div>
-          <%= link_to "Thermodynamics Analysis", assignment_path(6), class: "text-lg font-semibold text-gray-900 mb-2 block hover:text-blue-600 transition-colors" %>
-          <p class="text-sm text-gray-600 line-clamp-3">Analyze the Carnot cycle efficiency for a heat engine operating between two thermal reservoirs. Compare with real-world engines.</p>
-        </div>
-        <%= link_to profile_path(6), class: "flex items-center gap-3 mt-4 pt-4 border-t border-gray-100 hover:bg-gray-50 -mx-5 -mb-5 px-5 pb-5 pt-4 rounded-b-xl transition-colors" do %>
-          <div class="h-8 w-8 rounded-full bg-green-100 flex items-center justify-center text-xs font-medium text-green-700">ML</div>
-          <div>
-            <p class="text-sm font-medium text-gray-900">Maria Lazaridou</p>
-            <p class="text-xs text-green-600">Physics</p>
-          </div>
-        <% end %>
-      </div>
-
-      <div class="bg-white rounded-xl shadow-sm border border-gray-200 border-l-4 border-l-purple-600 p-5 flex flex-col justify-between">
-        <div>
-          <%= link_to "Differential Equations Assignment", assignment_path(7), class: "text-lg font-semibold text-gray-900 mb-2 block hover:text-blue-600 transition-colors" %>
-          <p class="text-sm text-gray-600 line-clamp-3">Solve systems of first-order ODEs using matrix methods. Apply eigenvalue decomposition to find general solutions.</p>
-        </div>
-        <%= link_to profile_path(7), class: "flex items-center gap-3 mt-4 pt-4 border-t border-gray-100 hover:bg-gray-50 -mx-5 -mb-5 px-5 pb-5 pt-4 rounded-b-xl transition-colors" do %>
-          <div class="h-8 w-8 rounded-full bg-purple-100 flex items-center justify-center text-xs font-medium text-purple-700">KS</div>
-          <div>
-            <p class="text-sm font-medium text-gray-900">Kostas Stavridis</p>
-            <p class="text-xs text-purple-600">Math</p>
-          </div>
-        <% end %>
-      </div>
-
-      <div class="bg-white rounded-xl shadow-sm border border-gray-200 border-l-4 border-l-yellow-600 p-5 flex flex-col justify-between">
-        <div>
-          <%= link_to "Inorganic Chemistry Review", assignment_path(8), class: "text-lg font-semibold text-gray-900 mb-2 block hover:text-blue-600 transition-colors" %>
-          <p class="text-sm text-gray-600 line-clamp-3">Compare the bonding theories for transition metal complexes. Discuss crystal field theory versus molecular orbital theory.</p>
-        </div>
-        <%= link_to profile_path(8), class: "flex items-center gap-3 mt-4 pt-4 border-t border-gray-100 hover:bg-gray-50 -mx-5 -mb-5 px-5 pb-5 pt-4 rounded-b-xl transition-colors" do %>
-          <div class="h-8 w-8 rounded-full bg-yellow-100 flex items-center justify-center text-xs font-medium text-yellow-700">IN</div>
-          <div>
-            <p class="text-sm font-medium text-gray-900">Ioanna Nikolaou</p>
-            <p class="text-xs text-yellow-600">Chemistry</p>
-          </div>
-        <% end %>
-      </div>
-
+    <%# Subject filter pills %>
+    <div class="flex flex-wrap gap-2 mb-8">
+      <% subjects.each do |label, value| %>
+        <% active = params[:subject] == value || (value.nil? && params[:subject].blank?) %>
+        <%= link_to label, root_path(subject: value),
+              class: "rounded-full px-4 py-1.5 text-sm font-medium transition-colors #{active ? 'bg-gray-900 text-white' : 'bg-gray-100 text-gray-600 hover:bg-gray-200'}" %>
+      <% end %>
     </div>
+
+    <% if @assignments.any? %>
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+        <% @assignments.each do |assignment| %>
+          <%
+            color = dept_colors[assignment.subject] || "blue"
+            author = assignment.user
+            initials = [author.firstname, author.lastname].compact.map { |n| n[0] }.join.upcase
+            initials = author.email[0..1].upcase if initials.blank?
+            name = [author.firstname, author.lastname].compact.join(" ")
+            name = author.email.split("@").first if name.blank?
+            dept_label = assignment.subject&.titleize || "Unknown"
+          %>
+
+          <div class="bg-white rounded-xl shadow-sm border border-gray-200 border-l-4 border-l-<%= color %>-600 p-5 flex flex-col justify-between">
+            <div>
+              <%= link_to assignment.title, assignment_path(assignment), class: "text-lg font-semibold text-gray-900 mb-2 block hover:text-blue-600 transition-colors" %>
+              <p class="text-sm text-gray-600 line-clamp-3"><%= assignment.body %></p>
+            </div>
+            <%= link_to profile_path(author), class: "flex items-center gap-3 mt-4 pt-4 border-t border-gray-100 hover:bg-gray-50 -mx-5 -mb-5 px-5 pb-5 pt-4 rounded-b-xl transition-colors" do %>
+              <div class="h-8 w-8 rounded-full bg-<%= color %>-100 flex items-center justify-center text-xs font-medium text-<%= color %>-700"><%= initials %></div>
+              <div>
+                <p class="text-sm font-medium text-gray-900"><%= name %></p>
+                <p class="text-xs text-<%= color %>-600"><%= dept_label %></p>
+              </div>
+            <% end %>
+          </div>
+        <% end %>
+      </div>
+    <% else %>
+      <p class="text-gray-500 text-sm">No assignments found.</p>
+    <% end %>
   </div>
 <% else %>
   <div class="py-16 text-center">
