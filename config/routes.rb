@@ -1,8 +1,11 @@
 Rails.application.routes.draw do
-  devise_for :users, controllers: { omniauth_callbacks: "users/omniauth_callbacks" }
+  devise_for :users, controllers: { omniauth_callbacks: "users/omniauth_callbacks", registrations: "users/registrations" }
   get "home/index"
 
-  resources :assignments
+  resources :assignments do
+    post :join_request, on: :member
+    patch :handle_join_request, on: :member
+  end
 
   get "teams", to: "teams#index", as: :teams
   get "messages", to: "messages#index", as: :messages

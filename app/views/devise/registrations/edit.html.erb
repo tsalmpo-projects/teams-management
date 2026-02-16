@@ -7,9 +7,92 @@
         <%= render "devise/shared/error_messages", resource: resource %>
 
         <div class="space-y-5">
+          <div class="grid grid-cols-2 gap-4">
+            <div>
+              <%= f.label :firstname, "First Name", class: "block text-sm font-medium text-gray-700 mb-1" %>
+              <%= f.text_field :firstname, autocomplete: "given-name", class: "w-full rounded-lg border border-gray-300 px-3 py-2 text-sm shadow-sm focus:border-blue-500 focus:ring-1 focus:ring-blue-500 outline-none" %>
+            </div>
+            <div>
+              <%= f.label :lastname, "Last Name", class: "block text-sm font-medium text-gray-700 mb-1" %>
+              <%= f.text_field :lastname, autocomplete: "family-name", class: "w-full rounded-lg border border-gray-300 px-3 py-2 text-sm shadow-sm focus:border-blue-500 focus:ring-1 focus:ring-blue-500 outline-none" %>
+            </div>
+          </div>
+
           <div>
             <%= f.label :email, class: "block text-sm font-medium text-gray-700 mb-1" %>
             <%= f.email_field :email, autofocus: true, autocomplete: "email", class: "w-full rounded-lg border border-gray-300 px-3 py-2 text-sm shadow-sm focus:border-blue-500 focus:ring-1 focus:ring-blue-500 outline-none" %>
+          </div>
+
+          <fieldset>
+            <legend class="block text-sm font-medium text-gray-700 mb-3">Department</legend>
+            <div class="grid grid-cols-2 gap-3">
+
+              <label class="relative cursor-pointer">
+                <%= f.radio_button :department, "computer_science", class: "peer sr-only" %>
+                <div class="flex items-center gap-3 rounded-lg border-2 border-gray-200 p-3 transition-all peer-checked:border-blue-600 peer-checked:bg-blue-50 hover:border-gray-300">
+                  <div class="h-10 w-10 rounded-lg bg-blue-100 flex items-center justify-center shrink-0">
+                    <svg class="h-5 w-5 text-blue-600" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+                      <path stroke-linecap="round" stroke-linejoin="round" d="M9 17.25v1.007a3 3 0 0 1-.879 2.122L7.5 21h9l-.621-.621A3 3 0 0 1 15 18.257V17.25m6-12V15a2.25 2.25 0 0 1-2.25 2.25H5.25A2.25 2.25 0 0 1 3 15V5.25m18 0A2.25 2.25 0 0 0 18.75 3H5.25A2.25 2.25 0 0 0 3 5.25m18 0V12a2.25 2.25 0 0 1-2.25 2.25H5.25A2.25 2.25 0 0 1 3 12V5.25" />
+                    </svg>
+                  </div>
+                  <div>
+                    <p class="text-sm font-medium text-gray-900">Computer Science</p>
+                    <p class="text-xs text-gray-500">CS Department</p>
+                  </div>
+                </div>
+              </label>
+
+              <label class="relative cursor-pointer">
+                <%= f.radio_button :department, "physics", class: "peer sr-only" %>
+                <div class="flex items-center gap-3 rounded-lg border-2 border-gray-200 p-3 transition-all peer-checked:border-green-600 peer-checked:bg-green-50 hover:border-gray-300">
+                  <div class="h-10 w-10 rounded-lg bg-green-100 flex items-center justify-center shrink-0">
+                    <svg class="h-5 w-5 text-green-600" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+                      <path stroke-linecap="round" stroke-linejoin="round" d="M12 18v-5.25m0 0a6.01 6.01 0 0 0 1.5-.189m-1.5.189a6.01 6.01 0 0 1-1.5-.189m3.75 7.478a12.06 12.06 0 0 1-4.5 0m3.75 2.383a14.406 14.406 0 0 1-3 0M14.25 18v-.192c0-.983.658-1.823 1.508-2.316a7.5 7.5 0 1 0-7.517 0c.85.493 1.509 1.333 1.509 2.316V18" />
+                    </svg>
+                  </div>
+                  <div>
+                    <p class="text-sm font-medium text-gray-900">Physics</p>
+                    <p class="text-xs text-gray-500">Physics Department</p>
+                  </div>
+                </div>
+              </label>
+
+              <label class="relative cursor-pointer">
+                <%= f.radio_button :department, "math", class: "peer sr-only" %>
+                <div class="flex items-center gap-3 rounded-lg border-2 border-gray-200 p-3 transition-all peer-checked:border-purple-600 peer-checked:bg-purple-50 hover:border-gray-300">
+                  <div class="h-10 w-10 rounded-lg bg-purple-100 flex items-center justify-center shrink-0">
+                    <svg class="h-5 w-5 text-purple-600" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+                      <path stroke-linecap="round" stroke-linejoin="round" d="M4.745 3A23.933 23.933 0 0 0 3 12c0 3.183.62 6.22 1.745 9M19.5 3c.967 2.78 1.5 5.817 1.5 9s-.533 6.22-1.5 9M8.25 8.885l1.444-.89a.75.75 0 0 1 1.105.402l2.402 7.206a.75.75 0 0 0 1.105.401l1.444-.889" />
+                    </svg>
+                  </div>
+                  <div>
+                    <p class="text-sm font-medium text-gray-900">Math</p>
+                    <p class="text-xs text-gray-500">Math Department</p>
+                  </div>
+                </div>
+              </label>
+
+              <label class="relative cursor-pointer">
+                <%= f.radio_button :department, "chemistry", class: "peer sr-only" %>
+                <div class="flex items-center gap-3 rounded-lg border-2 border-gray-200 p-3 transition-all peer-checked:border-yellow-600 peer-checked:bg-yellow-50 hover:border-gray-300">
+                  <div class="h-10 w-10 rounded-lg bg-yellow-100 flex items-center justify-center shrink-0">
+                    <svg class="h-5 w-5 text-yellow-600" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+                      <path stroke-linecap="round" stroke-linejoin="round" d="M9.75 3.104v5.714a2.25 2.25 0 0 1-.659 1.591L5 14.5M9.75 3.104c-.251.023-.501.05-.75.082m.75-.082a24.301 24.301 0 0 1 4.5 0m0 0v5.714c0 .597.237 1.17.659 1.591L19.8 15.3M14.25 3.104c.251.023.501.05.75.082M19.8 15.3l-1.57.393A9.065 9.065 0 0 1 12 15a9.065 9.065 0 0 0-6.23.693L5 14.5m14.8.8 1.402 1.402c1.232 1.232.65 3.318-1.067 3.611A48.309 48.309 0 0 1 12 21c-2.773 0-5.491-.235-8.135-.687-1.718-.293-2.3-2.379-1.067-3.61L5 14.5" />
+                    </svg>
+                  </div>
+                  <div>
+                    <p class="text-sm font-medium text-gray-900">Chemistry</p>
+                    <p class="text-xs text-gray-500">Chemistry Department</p>
+                  </div>
+                </div>
+              </label>
+
+            </div>
+          </fieldset>
+
+          <div>
+            <%= f.label :bio, class: "block text-sm font-medium text-gray-700 mb-1" %>
+            <%= f.text_area :bio, rows: 3, placeholder: "Tell us a bit about yourself...", class: "w-full rounded-lg border border-gray-300 px-3 py-2 text-sm shadow-sm focus:border-blue-500 focus:ring-1 focus:ring-blue-500 outline-none resize-none" %>
           </div>
 
           <% if devise_mapping.confirmable? && resource.pending_reconfirmation? %>
@@ -18,25 +101,27 @@
             </div>
           <% end %>
 
-          <div>
-            <%= f.label :password, class: "block text-sm font-medium text-gray-700 mb-1" %>
-            <p class="text-xs text-gray-500 mb-1">Leave blank if you don't want to change it</p>
-            <%= f.password_field :password, autocomplete: "new-password", class: "w-full rounded-lg border border-gray-300 px-3 py-2 text-sm shadow-sm focus:border-blue-500 focus:ring-1 focus:ring-blue-500 outline-none" %>
-            <% if @minimum_password_length %>
-              <p class="text-xs text-gray-500 mt-1"><%= @minimum_password_length %> characters minimum</p>
-            <% end %>
-          </div>
+          <% unless resource.provider.present? %>
+            <div>
+              <%= f.label :password, class: "block text-sm font-medium text-gray-700 mb-1" %>
+              <p class="text-xs text-gray-500 mb-1">Leave blank if you don't want to change it</p>
+              <%= f.password_field :password, autocomplete: "new-password", class: "w-full rounded-lg border border-gray-300 px-3 py-2 text-sm shadow-sm focus:border-blue-500 focus:ring-1 focus:ring-blue-500 outline-none" %>
+              <% if @minimum_password_length %>
+                <p class="text-xs text-gray-500 mt-1"><%= @minimum_password_length %> characters minimum</p>
+              <% end %>
+            </div>
 
-          <div>
-            <%= f.label :password_confirmation, class: "block text-sm font-medium text-gray-700 mb-1" %>
-            <%= f.password_field :password_confirmation, autocomplete: "new-password", class: "w-full rounded-lg border border-gray-300 px-3 py-2 text-sm shadow-sm focus:border-blue-500 focus:ring-1 focus:ring-blue-500 outline-none" %>
-          </div>
+            <div>
+              <%= f.label :password_confirmation, class: "block text-sm font-medium text-gray-700 mb-1" %>
+              <%= f.password_field :password_confirmation, autocomplete: "new-password", class: "w-full rounded-lg border border-gray-300 px-3 py-2 text-sm shadow-sm focus:border-blue-500 focus:ring-1 focus:ring-blue-500 outline-none" %>
+            </div>
 
-          <div>
-            <%= f.label :current_password, class: "block text-sm font-medium text-gray-700 mb-1" %>
-            <p class="text-xs text-gray-500 mb-1">We need your current password to confirm your changes</p>
-            <%= f.password_field :current_password, autocomplete: "current-password", class: "w-full rounded-lg border border-gray-300 px-3 py-2 text-sm shadow-sm focus:border-blue-500 focus:ring-1 focus:ring-blue-500 outline-none" %>
-          </div>
+            <div>
+              <%= f.label :current_password, class: "block text-sm font-medium text-gray-700 mb-1" %>
+              <p class="text-xs text-gray-500 mb-1">We need your current password to confirm your changes</p>
+              <%= f.password_field :current_password, autocomplete: "current-password", class: "w-full rounded-lg border border-gray-300 px-3 py-2 text-sm shadow-sm focus:border-blue-500 focus:ring-1 focus:ring-blue-500 outline-none" %>
+            </div>
+          <% end %>
 
           <div>
             <%= f.submit "Update", class: "w-full rounded-lg bg-blue-600 px-4 py-2.5 text-sm font-medium text-white hover:bg-blue-700 transition-colors cursor-pointer" %>

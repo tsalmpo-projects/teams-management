@@ -1,6 +1,6 @@
 class Message < ApplicationRecord
-  belongs_to :sender
-  belongs_to :recipient
-  belongs_to :assignment
-  belongs_to :team
+  belongs_to :sender, class_name: "User"
+  belongs_to :recipient, class_name: "User", optional: true
+  belongs_to :assignment, optional: true
+  belongs_to :team, optional: true
 end
