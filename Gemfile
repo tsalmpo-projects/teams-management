@@ -21,7 +21,7 @@ gem "jbuilder"
 gem 'devise'
 
 # OAuth Authentication using omniauth
-gem 'omniauth-google-oauth2'
+gem "omniauth-google-oauth2"
 gem "omniauth-rails_csrf_protection"
 
 # Dotenv to load environment variables from .env files in dev and test environments
@@ -74,3 +74,5 @@ group :test do
   gem "capybara"
   gem "selenium-webdriver"
 end
+
+gem "tailwindcss-rails", "~> 4.4"
