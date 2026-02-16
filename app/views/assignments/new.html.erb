@@ -6,10 +6,10 @@
     </div>
 
     <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
-      <form class="space-y-6">
+      <%= form_with model: @assignment, class: "space-y-6" do |form| %>
         <div>
-          <label for="title" class="block text-sm font-medium text-gray-700 mb-1">Title</label>
-          <input autocomplete="off" type="text" id="title" name="title" placeholder="e.g. Database Normalization Project" class="w-full rounded-lg border border-gray-300 px-4 py-2.5 text-sm text-gray-900 placeholder-gray-400 focus:border-blue-500 focus:ring-1 focus:ring-blue-500 outline-none">
+          <%= form.label :title, "Title", class: "block text-sm font-medium text-gray-700 mb-1" %>
+          <%= form.text_field :title, autocomplete: "off", placeholder: "e.g. Database Normalization Project", class: "w-full rounded-lg border border-gray-300 px-4 py-2.5 text-sm text-gray-900 placeholder-gray-400 focus:border-blue-500 focus:ring-1 focus:ring-blue-500 outline-none" %>
         </div>
 
         <fieldset>
@@ -17,7 +17,7 @@
           <div class="grid grid-cols-2 gap-3">
 
             <label class="relative cursor-pointer">
-              <input type="radio" name="subject" value="computer_science" class="peer sr-only">
+              <%= form.radio_button :subject, "computer_science", class: "peer sr-only" %>
               <div class="flex items-center gap-3 rounded-lg border-2 border-gray-200 p-3 transition-all peer-checked:border-blue-600 peer-checked:bg-blue-50 hover:border-gray-300">
                 <div class="h-10 w-10 rounded-lg bg-blue-100 flex items-center justify-center shrink-0">
                   <svg class="h-5 w-5 text-blue-600" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
@@ -32,7 +32,7 @@
             </label>
 
             <label class="relative cursor-pointer">
-              <input type="radio" name="subject" value="physics" class="peer sr-only">
+              <%= form.radio_button :subject, "physics", class: "peer sr-only" %>
               <div class="flex items-center gap-3 rounded-lg border-2 border-gray-200 p-3 transition-all peer-checked:border-green-600 peer-checked:bg-green-50 hover:border-gray-300">
                 <div class="h-10 w-10 rounded-lg bg-green-100 flex items-center justify-center shrink-0">
                   <svg class="h-5 w-5 text-green-600" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
@@ -47,7 +47,7 @@
             </label>
 
             <label class="relative cursor-pointer">
-              <input type="radio" name="subject" value="math" class="peer sr-only">
+              <%= form.radio_button :subject, "math", class: "peer sr-only" %>
               <div class="flex items-center gap-3 rounded-lg border-2 border-gray-200 p-3 transition-all peer-checked:border-purple-600 peer-checked:bg-purple-50 hover:border-gray-300">
                 <div class="h-10 w-10 rounded-lg bg-purple-100 flex items-center justify-center shrink-0">
                   <svg class="h-5 w-5 text-purple-600" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
@@ -62,7 +62,7 @@
             </label>
 
             <label class="relative cursor-pointer">
-              <input type="radio" name="subject" value="chemistry" class="peer sr-only">
+              <%= form.radio_button :subject, "chemistry", class: "peer sr-only" %>
               <div class="flex items-center gap-3 rounded-lg border-2 border-gray-200 p-3 transition-all peer-checked:border-yellow-600 peer-checked:bg-yellow-50 hover:border-gray-300">
                 <div class="h-10 w-10 rounded-lg bg-yellow-100 flex items-center justify-center shrink-0">
                   <svg class="h-5 w-5 text-yellow-600" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
@@ -80,17 +80,15 @@
         </fieldset>
 
         <div>
-          <label for="body" class="block text-sm font-medium text-gray-700 mb-1">Description</label>
-          <textarea id="body" name="body" rows="6" placeholder="Describe the assignment, requirements, and any relevant details..." class="w-full rounded-lg border border-gray-300 px-4 py-2.5 text-sm text-gray-900 placeholder-gray-400 focus:border-blue-500 focus:ring-1 focus:ring-blue-500 outline-none resize-none"></textarea>
+          <%= form.label :body, "Description", class: "block text-sm font-medium text-gray-700 mb-1" %>
+          <%= form.text_area :body, rows: 6, placeholder: "Describe the assignment, requirements, and any relevant details...", class: "w-full rounded-lg border border-gray-300 px-4 py-2.5 text-sm text-gray-900 placeholder-gray-400 focus:border-blue-500 focus:ring-1 focus:ring-blue-500 outline-none resize-none" %>
         </div>
 
         <div class="flex items-center justify-end gap-3 pt-2">
-          <%= link_to "Cancel", my_assignments_path, class: "rounded-lg border border-gray-300 bg-white px-4 py-2.5 text-sm font-medium text-gray-700 hover:bg-gray-50 transition-colors" %>
-          <button type="submit" class="rounded-lg bg-blue-600 px-4 py-2.5 text-sm font-medium text-white hover:bg-blue-700 transition-colors cursor-pointer">
-            Create Assignment
-          </button>
+          <%= link_to "Cancel", assignments_path, class: "rounded-lg border border-gray-300 bg-white px-4 py-2.5 text-sm font-medium text-gray-700 hover:bg-gray-50 transition-colors" %>
+          <%= form.submit "Create Assignment", class: "rounded-lg bg-blue-600 px-4 py-2.5 text-sm font-medium text-white hover:bg-blue-700 transition-colors cursor-pointer" %>
         </div>
-      </form>
+      <% end %>
     </div>
   </div>
 </div>

@@ -7,40 +7,27 @@
     <%= link_to "+ New Assignment", new_assignment_path, class: "rounded-lg bg-blue-600 px-4 py-2 text-sm font-medium text-white hover:bg-blue-700 transition-colors" %>
   </div>
 
-  <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-
-    <div class="bg-white rounded-xl shadow-sm border border-gray-200 border-l-4 border-l-blue-600 p-5 flex flex-col justify-between">
-      <div>
-        <h3 class="text-lg font-semibold text-gray-900 mb-2">Database Normalization Project</h3>
-        <p class="text-sm text-gray-600 line-clamp-3">Design and implement a fully normalized relational database schema for a university library system. Include ER diagrams and SQL scripts.</p>
-      </div>
-      <div class="flex items-center justify-between mt-4 pt-4 border-t border-gray-100">
-        <span class="text-xs text-gray-500">Posted 2 days ago</span>
-        <span class="inline-flex items-center rounded-full bg-green-100 px-2.5 py-0.5 text-xs font-medium text-green-700">Active</span>
-      </div>
+  <% if @assignments.any? %>
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+      <% @assignments.each do |assignment| %>
+        <div class="bg-white rounded-xl shadow-sm border border-gray-200 border-l-4 border-l-blue-600 p-5 flex flex-col justify-between">
+          <div>
+            <%= link_to assignment.title, assignment_path(assignment), class: "text-lg font-semibold text-gray-900 mb-2 block hover:text-blue-600 transition-colors" %>
+            <p class="text-sm text-gray-600 line-clamp-3"><%= assignment.body %></p>
+          </div>
+          <div class="flex items-center justify-between mt-4 pt-4 border-t border-gray-100">
+            <span class="text-xs text-gray-500">Posted <%= time_ago_in_words(assignment.created_at) %> ago</span>
+            <%= link_to assignment_path(assignment), data: { turbo_method: :delete, turbo_confirm: "Are you sure you want to delete this assignment?" }, class: "text-xs text-red-500 hover:text-red-700 transition-colors" do %>
+              Delete
+            <% end %>
+          </div>
+        </div>
+      <% end %>
     </div>
-
-    <div class="bg-white rounded-xl shadow-sm border border-gray-200 border-l-4 border-l-blue-600 p-5 flex flex-col justify-between">
-      <div>
-        <h3 class="text-lg font-semibold text-gray-900 mb-2">REST API Design</h3>
-        <p class="text-sm text-gray-600 line-clamp-3">Design and document a RESTful API for an e-commerce platform. Include authentication, pagination, and error handling patterns.</p>
-      </div>
-      <div class="flex items-center justify-between mt-4 pt-4 border-t border-gray-100">
-        <span class="text-xs text-gray-500">Posted 5 days ago</span>
-        <span class="inline-flex items-center rounded-full bg-green-100 px-2.5 py-0.5 text-xs font-medium text-green-700">Active</span>
-      </div>
+  <% else %>
+    <div class="text-center py-12">
+      <p class="text-gray-500 mb-4">You haven't posted any assignments yet.</p>
+      <%= link_to "Create your first assignment", new_assignment_path, class: "text-sm font-medium text-blue-600 hover:text-blue-700 transition-colors" %>
     </div>
-
-    <div class="bg-white rounded-xl shadow-sm border border-gray-200 border-l-4 border-l-gray-400 p-5 flex flex-col justify-between">
-      <div>
-        <h3 class="text-lg font-semibold text-gray-900 mb-2">Operating Systems Homework</h3>
-        <p class="text-sm text-gray-600 line-clamp-3">Implement a simple round-robin process scheduler in C. Simulate context switching and calculate average turnaround time.</p>
-      </div>
-      <div class="flex items-center justify-between mt-4 pt-4 border-t border-gray-100">
-        <span class="text-xs text-gray-500">Posted 14 days ago</span>
-        <span class="inline-flex items-center rounded-full bg-gray-100 px-2.5 py-0.5 text-xs font-medium text-gray-600">Closed</span>
-      </div>
-    </div>
-
-  </div>
+  <% end %>
 </div>
