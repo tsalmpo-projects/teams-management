@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_02_16_200958) do
+ActiveRecord::Schema[8.1].define(version: 2026_02_16_205545) do
   create_table "assignments", force: :cascade do |t|
     t.text "body"
     t.datetime "created_at", null: false
@@ -37,6 +37,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_02_16_200958) do
     t.text "content"
     t.datetime "created_at", null: false
     t.boolean "declined"
+    t.boolean "read", default: false, null: false
     t.integer "recipient_id"
     t.integer "sender_id", null: false
     t.integer "team_id"

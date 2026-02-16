@@ -1,0 +1,114 @@
+<% content_for :fullscreen, true %>
+
+<%
+  team_name = @team.assignment&.title || "Team ##{@team.id}"
+  owner = @team.user
+  non_owner_members = @team.members.reject { |m| m.id == @team.user_id }
+  all_people = [owner] + non_owner_members
+  total_count = all_people.size
+
+  current_name = [current_user.firstname, current_user.lastname].compact.join(" ")
+  current_name = current_user.email.split("@").first if current_name.blank?
+  current_initials = [current_user.firstname, current_user.lastname].compact.map { |n| n[0] }.join.upcase
+  current_initials = current_user.email[0..1].upcase if current_initials.blank?
+
+  conversation_id = "team_#{@team.id}"
+%>
+
+<div class="flex flex-1 overflow-hidden">
+
+  <%# Left panel — conversation list %>
+  <div class="w-80 border-r border-gray-200 bg-white flex flex-col shrink-0">
+    <div class="p-4 border-b border-gray-200">
+      <h2 class="text-lg font-semibold text-gray-900">Messages</h2>
+    </div>
+    <%= render "messages/conversation_list" %>
+  </div>
+
+  <%# Right panel — team conversation %>
+  <div class="flex-1 flex flex-col bg-white"
+       data-controller="chat"
+       data-chat-conversation-id-value="<%= conversation_id %>"
+       data-chat-current-user-id-value="<%= current_user.id %>"
+       data-chat-current-user-name-value="<%= current_name %>"
+       data-chat-current-user-initials-value="<%= current_initials %>"
+       data-chat-send-url-value="<%= send_team_message_path(@team) %>"
+       data-chat-csrf-token-value="<%= form_authenticity_token %>"
+       data-chat-default-indicator-text-value="<%= total_count %> members"
+       data-chat-group-chat-value="true">
+
+    <%# Conversation header %>
+    <div class="p-4 border-b border-gray-200 flex items-center gap-3">
+      <div class="flex -space-x-2 shrink-0">
+        <% all_people.each_with_index do |person, i| %>
+          <%
+            m_initials = [person.firstname, person.lastname].compact.map { |n| n[0] }.join.upcase
+            m_initials = person.email[0..1].upcase if m_initials.blank?
+            m_name = [person.firstname, person.lastname].compact.join(" ")
+            m_name = person.email.split("@").first if m_name.blank?
+            ac = avatar_classes(i)
+          %>
+          <%= link_to profile_path(person), title: m_name do %>
+            <div class="h-8 w-8 rounded-full <%= ac[:bg] %> flex items-center justify-center text-xs font-medium <%= ac[:text] %> border-2 border-white hover:ring-2 <%= ac[:ring] %> transition-shadow"><%= m_initials %></div>
+          <% end %>
+        <% end %>
+      </div>
+      <div>
+        <p class="text-sm font-semibold text-gray-900"><%= team_name %></p>
+        <p class="text-xs text-gray-500" data-chat-target="typingIndicator"><%= total_count %> members</p>
+      </div>
+    </div>
+
+    <%# Messages area %>
+    <div class="flex-1 overflow-y-auto p-4 space-y-4" data-chat-target="messagesContainer">
+      <% @messages.each do |msg| %>
+        <%
+          is_mine = msg.sender_id == current_user.id
+          sender = msg.sender
+          msg_name = [sender.firstname, sender.lastname].compact.join(" ")
+          msg_name = sender.email.split("@").first if msg_name.blank?
+          msg_initials = [sender.firstname, sender.lastname].compact.map { |n| n[0] }.join.upcase
+          msg_initials = sender.email[0..1].upcase if msg_initials.blank?
+        %>
+        <div class="flex items-end gap-2 <%= is_mine ? 'justify-end' : 'justify-start' %>">
+          <% unless is_mine %>
+            <div class="h-8 w-8 rounded-full bg-blue-100 flex items-center justify-center text-xs font-medium text-blue-700 shrink-0">
+              <%= msg_initials %>
+            </div>
+          <% end %>
+          <div class="max-w-md">
+            <% unless is_mine %>
+              <p class="text-[11px] font-medium text-gray-500 mb-0.5"><%= msg_name %></p>
+            <% end %>
+            <div class="rounded-2xl px-4 py-2 text-sm <%= is_mine ? 'bg-blue-600 text-white' : 'bg-gray-100 text-gray-900' %>">
+              <%= msg.content %>
+            </div>
+            <p class="text-xs text-gray-400 mt-1 <%= is_mine ? 'text-right' : '' %>">
+              <%= msg.created_at.strftime("%-I:%M %p") %>
+            </p>
+          </div>
+        </div>
+      <% end %>
+    </div>
+
+    <%# Input area %>
+    <div class="p-4 border-t border-gray-200">
+      <div class="flex items-end gap-3">
+        <textarea
+          data-chat-target="input"
+          data-action="input->chat#onTyping keydown->chat#onKeydown"
+          placeholder="Type a message..."
+          rows="1"
+          class="flex-1 resize-none rounded-xl border border-gray-300 px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+        ></textarea>
+        <button
+          data-action="click->chat#send"
+          class="inline-flex items-center justify-center h-10 w-10 rounded-full bg-blue-600 text-white hover:bg-blue-700 transition-colors shrink-0 cursor-pointer">
+          <svg class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M6 12 3.269 3.125A59.769 59.769 0 0 1 21.485 12 59.768 59.768 0 0 1 3.27 20.875L5.999 12Zm0 0h7.5" />
+          </svg>
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

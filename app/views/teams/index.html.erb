@@ -1,114 +1,86 @@
+<%
+  subject_labels = { "computer_science" => "Computer Science", "physics" => "Physics", "math" => "Math", "chemistry" => "Chemistry" }
+%>
+
 <div class="py-6">
   <div class="mb-8">
     <h1 class="text-2xl font-bold text-gray-900 mb-1">My Teams</h1>
     <p class="text-gray-600">Teams you've joined across all assignments.</p>
   </div>
 
-  <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+  <% if @teams.any? %>
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+      <% @teams.each do |team| %>
+        <%
+          assignment = team.assignment
+          subject_label = subject_labels[assignment&.subject] || "Unknown"
+          due_text = if assignment&.due_date
+            days = (assignment.due_date - Date.today).to_i
+            if days > 0
+              "Due in #{days} #{'day'.pluralize(days)}"
+            elsif days == 0
+              "Due today"
+            else
+              "#{days.abs} #{'day'.pluralize(days.abs)} overdue"
+            end
+          end
+        %>
+        <%
+          is_owner = team.user_id == current_user.id
+          owner = team.user
+          owner_name = [owner.firstname, owner.lastname].compact.join(" ")
+          owner_name = owner.email.split("@").first if owner_name.blank?
+          owner_initials = [owner.firstname, owner.lastname].compact.map { |n| n[0] }.join.upcase
+          owner_initials = owner.email[0..1].upcase if owner_initials.blank?
+          non_owner_members = team.members.reject { |m| m.id == team.user_id }
+        %>
+        <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-5">
+          <div class="mb-4">
+            <h3 class="text-lg font-semibold text-gray-900"><%= assignment&.title || "Untitled Assignment" %></h3>
+            <p class="text-sm text-gray-500"><%= subject_label %><%= " &middot; #{due_text}".html_safe if due_text %></p>
+          </div>
 
-    <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-5">
-      <div class="mb-4">
-        <h3 class="text-lg font-semibold text-gray-900">Database Normalization Project</h3>
-        <p class="text-sm text-gray-500">Computer Science &middot; Due in 5 days</p>
-      </div>
-      <div class="flex items-center justify-between">
-        <div class="flex -space-x-2">
-          <%= link_to profile_path(1), title: "Anna Papadopoulou" do %>
-            <div class="h-8 w-8 rounded-full bg-blue-100 flex items-center justify-center text-xs font-medium text-blue-700 border-2 border-white hover:ring-2 hover:ring-blue-300 transition-shadow">AP</div>
-          <% end %>
-          <%= link_to profile_path(2), title: "Nikos Karagiannis" do %>
-            <div class="h-8 w-8 rounded-full bg-green-100 flex items-center justify-center text-xs font-medium text-green-700 border-2 border-white hover:ring-2 hover:ring-green-300 transition-shadow">NK</div>
-          <% end %>
-          <%= link_to profile_path(3), title: "Elena Vlachou" do %>
-            <div class="h-8 w-8 rounded-full bg-purple-100 flex items-center justify-center text-xs font-medium text-purple-700 border-2 border-white hover:ring-2 hover:ring-purple-300 transition-shadow">EV</div>
-          <% end %>
+          <%# Owner %>
+          <div class="flex items-center gap-2 mb-3">
+            <%= link_to profile_path(owner), class: "flex items-center gap-2 hover:opacity-80 transition-opacity", title: owner_name do %>
+              <div class="h-7 w-7 rounded-full bg-amber-100 flex items-center justify-center text-xs font-medium text-amber-700 border-2 border-amber-300"><%= owner_initials %></div>
+              <span class="text-xs font-medium text-gray-700"><%= owner_name %></span>
+            <% end %>
+            <span class="text-xs text-amber-600 font-medium">Owner</span>
+          </div>
+
+          <div class="flex items-center justify-between">
+            <div class="flex -space-x-2">
+              <% non_owner_members.each_with_index do |member, i| %>
+                <%
+                  member_name = [member.firstname, member.lastname].compact.join(" ")
+                  member_name = member.email.split("@").first if member_name.blank?
+                  member_initials = [member.firstname, member.lastname].compact.map { |n| n[0] }.join.upcase
+                  member_initials = member.email[0..1].upcase if member_initials.blank?
+                  ac = avatar_classes(i)
+                %>
+                <%= link_to profile_path(member), title: member_name do %>
+                  <div class="h-8 w-8 rounded-full <%= ac[:bg] %> flex items-center justify-center text-xs font-medium <%= ac[:text] %> border-2 border-white hover:ring-2 <%= ac[:ring] %> transition-shadow"><%= member_initials %></div>
+                <% end %>
+              <% end %>
+            </div>
+            <%= link_to team_conversation_path(team), class: "inline-flex items-center gap-1.5 rounded-lg bg-blue-50 px-3 py-1.5 text-sm font-medium text-blue-700 hover:bg-blue-100 transition-colors" do %>
+              <svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M8.625 12a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Zm0 0H8.25m4.125 0a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Zm0 0H12m4.125 0a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Zm0 0h-.375M21 12c0 4.556-4.03 8.25-9 8.25a9.764 9.764 0 0 1-2.555-.337A5.972 5.972 0 0 1 5.41 20.97a5.969 5.969 0 0 1-.474-.065 4.48 4.48 0 0 0 .978-2.025c.09-.457-.133-.901-.467-1.226C3.93 16.178 3 14.189 3 12c0-4.556 4.03-8.25 9-8.25s9 3.694 9 8.25Z" />
+              </svg>
+              Chat
+            <% end %>
+          </div>
         </div>
-        <%= link_to messages_path, class: "inline-flex items-center gap-1.5 rounded-lg bg-blue-50 px-3 py-1.5 text-sm font-medium text-blue-700 hover:bg-blue-100 transition-colors" do %>
-          <svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
-            <path stroke-linecap="round" stroke-linejoin="round" d="M8.625 12a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Zm0 0H8.25m4.125 0a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Zm0 0H12m4.125 0a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Zm0 0h-.375M21 12c0 4.556-4.03 8.25-9 8.25a9.764 9.764 0 0 1-2.555-.337A5.972 5.972 0 0 1 5.41 20.97a5.969 5.969 0 0 1-.474-.065 4.48 4.48 0 0 0 .978-2.025c.09-.457-.133-.901-.467-1.226C3.93 16.178 3 14.189 3 12c0-4.556 4.03-8.25 9-8.25s9 3.694 9 8.25Z" />
-          </svg>
-          Chat
-        <% end %>
-      </div>
+      <% end %>
     </div>
-
-    <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-5">
-      <div class="mb-4">
-        <h3 class="text-lg font-semibold text-gray-900">Quantum Mechanics Problem Set</h3>
-        <p class="text-sm text-gray-500">Physics &middot; Due in 3 days</p>
-      </div>
-      <div class="flex items-center justify-between">
-        <div class="flex -space-x-2">
-          <%= link_to profile_path(2), title: "Nikos Karagiannis" do %>
-            <div class="h-8 w-8 rounded-full bg-green-100 flex items-center justify-center text-xs font-medium text-green-700 border-2 border-white hover:ring-2 hover:ring-green-300 transition-shadow">NK</div>
-          <% end %>
-          <%= link_to profile_path(4), title: "Dimitris Makris" do %>
-            <div class="h-8 w-8 rounded-full bg-yellow-100 flex items-center justify-center text-xs font-medium text-yellow-700 border-2 border-white hover:ring-2 hover:ring-yellow-300 transition-shadow">DM</div>
-          <% end %>
-        </div>
-        <%= link_to messages_path, class: "inline-flex items-center gap-1.5 rounded-lg bg-blue-50 px-3 py-1.5 text-sm font-medium text-blue-700 hover:bg-blue-100 transition-colors" do %>
-          <svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
-            <path stroke-linecap="round" stroke-linejoin="round" d="M8.625 12a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Zm0 0H8.25m4.125 0a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Zm0 0H12m4.125 0a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Zm0 0h-.375M21 12c0 4.556-4.03 8.25-9 8.25a9.764 9.764 0 0 1-2.555-.337A5.972 5.972 0 0 1 5.41 20.97a5.969 5.969 0 0 1-.474-.065 4.48 4.48 0 0 0 .978-2.025c.09-.457-.133-.901-.467-1.226C3.93 16.178 3 14.189 3 12c0-4.556 4.03-8.25 9-8.25s9 3.694 9 8.25Z" />
-          </svg>
-          Chat
-        <% end %>
-      </div>
+  <% else %>
+    <div class="text-center py-12">
+      <svg class="h-12 w-12 text-gray-300 mx-auto mb-3" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+        <path stroke-linecap="round" stroke-linejoin="round" d="M18 18.72a9.094 9.094 0 0 0 3.741-.479 3 3 0 0 0-4.682-2.72m.94 3.198.001.031c0 .225-.012.447-.037.666A11.944 11.944 0 0 1 12 21c-2.17 0-4.207-.576-5.963-1.584A6.062 6.062 0 0 1 6 18.719m12 0a5.971 5.971 0 0 0-.941-3.197m0 0A5.995 5.995 0 0 0 12 12.75a5.995 5.995 0 0 0-5.058 2.772m0 0a3 3 0 0 0-4.681 2.72 8.986 8.986 0 0 0 3.74.477m.94-3.197a5.971 5.971 0 0 0-.94 3.197M15 6.75a3 3 0 1 1-6 0 3 3 0 0 1 6 0Zm6 3a2.25 2.25 0 1 1-4.5 0 2.25 2.25 0 0 1 4.5 0Zm-13.5 0a2.25 2.25 0 1 1-4.5 0 2.25 2.25 0 0 1 4.5 0Z" />
+      </svg>
+      <p class="text-gray-500 mb-4">You haven't joined any teams yet.</p>
+      <%= link_to "Browse assignments", assignments_path, class: "text-sm font-medium text-blue-600 hover:text-blue-700 transition-colors" %>
     </div>
-
-    <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-5">
-      <div class="mb-4">
-        <h3 class="text-lg font-semibold text-gray-900">Linear Algebra Proofs</h3>
-        <p class="text-sm text-gray-500">Math &middot; Due in 10 days</p>
-      </div>
-      <div class="flex items-center justify-between">
-        <div class="flex -space-x-2">
-          <%= link_to profile_path(3), title: "Elena Vlachou" do %>
-            <div class="h-8 w-8 rounded-full bg-purple-100 flex items-center justify-center text-xs font-medium text-purple-700 border-2 border-white hover:ring-2 hover:ring-purple-300 transition-shadow">EV</div>
-          <% end %>
-          <%= link_to profile_path(5), title: "George Theodorou" do %>
-            <div class="h-8 w-8 rounded-full bg-blue-100 flex items-center justify-center text-xs font-medium text-blue-700 border-2 border-white hover:ring-2 hover:ring-blue-300 transition-shadow">GT</div>
-          <% end %>
-          <%= link_to profile_path(6), title: "Maria Lazaridou" do %>
-            <div class="h-8 w-8 rounded-full bg-green-100 flex items-center justify-center text-xs font-medium text-green-700 border-2 border-white hover:ring-2 hover:ring-green-300 transition-shadow">ML</div>
-          <% end %>
-          <%= link_to profile_path(8), title: "Ioanna Nikolaou" do %>
-            <div class="h-8 w-8 rounded-full bg-yellow-100 flex items-center justify-center text-xs font-medium text-yellow-700 border-2 border-white hover:ring-2 hover:ring-yellow-300 transition-shadow">IN</div>
-          <% end %>
-        </div>
-        <%= link_to messages_path, class: "inline-flex items-center gap-1.5 rounded-lg bg-blue-50 px-3 py-1.5 text-sm font-medium text-blue-700 hover:bg-blue-100 transition-colors" do %>
-          <svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
-            <path stroke-linecap="round" stroke-linejoin="round" d="M8.625 12a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Zm0 0H8.25m4.125 0a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Zm0 0H12m4.125 0a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Zm0 0h-.375M21 12c0 4.556-4.03 8.25-9 8.25a9.764 9.764 0 0 1-2.555-.337A5.972 5.972 0 0 1 5.41 20.97a5.969 5.969 0 0 1-.474-.065 4.48 4.48 0 0 0 .978-2.025c.09-.457-.133-.901-.467-1.226C3.93 16.178 3 14.189 3 12c0-4.556 4.03-8.25 9-8.25s9 3.694 9 8.25Z" />
-          </svg>
-          Chat
-        <% end %>
-      </div>
-    </div>
-
-    <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-5">
-      <div class="mb-4">
-        <h3 class="text-lg font-semibold text-gray-900">Organic Chemistry Lab Report</h3>
-        <p class="text-sm text-gray-500">Chemistry &middot; Due in 7 days</p>
-      </div>
-      <div class="flex items-center justify-between">
-        <div class="flex -space-x-2">
-          <%= link_to profile_path(4), title: "Dimitris Makris" do %>
-            <div class="h-8 w-8 rounded-full bg-yellow-100 flex items-center justify-center text-xs font-medium text-yellow-700 border-2 border-white hover:ring-2 hover:ring-yellow-300 transition-shadow">DM</div>
-          <% end %>
-          <%= link_to profile_path(7), title: "Kostas Stavridis" do %>
-            <div class="h-8 w-8 rounded-full bg-purple-100 flex items-center justify-center text-xs font-medium text-purple-700 border-2 border-white hover:ring-2 hover:ring-purple-300 transition-shadow">KS</div>
-          <% end %>
-          <%= link_to profile_path(1), title: "Anna Papadopoulou" do %>
-            <div class="h-8 w-8 rounded-full bg-blue-100 flex items-center justify-center text-xs font-medium text-blue-700 border-2 border-white hover:ring-2 hover:ring-blue-300 transition-shadow">AP</div>
-          <% end %>
-        </div>
-        <%= link_to messages_path, class: "inline-flex items-center gap-1.5 rounded-lg bg-blue-50 px-3 py-1.5 text-sm font-medium text-blue-700 hover:bg-blue-100 transition-colors" do %>
-          <svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
-            <path stroke-linecap="round" stroke-linejoin="round" d="M8.625 12a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Zm0 0H8.25m4.125 0a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Zm0 0H12m4.125 0a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Zm0 0h-.375M21 12c0 4.556-4.03 8.25-9 8.25a9.764 9.764 0 0 1-2.555-.337A5.972 5.972 0 0 1 5.41 20.97a5.969 5.969 0 0 1-.474-.065 4.48 4.48 0 0 0 .978-2.025c.09-.457-.133-.901-.467-1.226C3.93 16.178 3 14.189 3 12c0-4.556 4.03-8.25 9-8.25s9 3.694 9 8.25Z" />
-          </svg>
-          Chat
-        <% end %>
-      </div>
-    </div>
-
-  </div>
+  <% end %>
 </div>
