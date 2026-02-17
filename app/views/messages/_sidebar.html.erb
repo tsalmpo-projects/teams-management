@@ -1,0 +1,31 @@
+<div class="w-80 border-r border-gray-200 bg-white flex flex-col shrink-0"
+     data-controller="contacts"
+     data-contacts-search-url-value="<%= search_contacts_path %>"
+     data-contacts-contacts-url-value="<%= contacts_path %>"
+     data-contacts-create-url-value="<%= contacts_path %>"
+     data-contacts-csrf-token-value="<%= form_authenticity_token %>">
+
+  <%# Tab bar %>
+  <div class="flex border-b border-gray-200">
+    <button data-contacts-target="messagesTab"
+            data-action="click->contacts#showMessages"
+            class="flex-1 py-3 text-sm font-semibold text-center text-blue-600 border-b-2 border-blue-600 transition-all duration-150 cursor-pointer">
+      Messages
+    </button>
+    <button data-contacts-target="contactsTab"
+            data-action="click->contacts#showContacts"
+            class="flex-1 py-3 text-sm font-medium text-center text-gray-500 border-b-2 border-transparent hover:text-gray-700 transition-all duration-150 cursor-pointer">
+      Contacts
+    </button>
+  </div>
+
+  <%# Messages panel (shown by default) %>
+  <div data-contacts-target="messagesPanel" class="flex flex-col flex-1 overflow-hidden">
+    <%= render "messages/conversation_list" %>
+  </div>
+
+  <%# Contacts panel (hidden by default) %>
+  <div data-contacts-target="contactsPanel" class="hidden flex-col flex-1 overflow-hidden">
+    <%= render "messages/contacts_tab" %>
+  </div>
+</div>

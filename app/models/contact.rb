@@ -1,4 +1,4 @@
 class Contact < ApplicationRecord
-  belongs_to :user, foreign_key: 'user_id'
-  belongs_to :user, foreign_key: 'contact_id'
+  belongs_to :user
+  belongs_to :contact_user, class_name: "User", foreign_key: "contact_id"
 end
