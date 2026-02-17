@@ -8,10 +8,8 @@
       <%
         other_user = msg.sender_id == current_user.id ? msg.recipient : msg.sender
         next unless other_user
-        other_name = [other_user.firstname, other_user.lastname].compact.join(" ")
-        other_name = other_user.email.split("@").first if other_name.blank?
-        other_initials = [other_user.firstname, other_user.lastname].compact.map { |n| n[0] }.join.upcase
-        other_initials = other_user.email[0..1].upcase if other_initials.blank?
+        other_name = display_name(other_user)
+        other_initials = display_initials(other_user)
         active = @selected_user&.id == other_user.id
         unread_count = Message.where(sender_id: other_user.id, recipient_id: current_user.id, team_id: nil, assignment_id: nil, read: false).count
       %>
@@ -52,7 +50,7 @@
         <div class="min-w-0 flex-1">
           <div class="flex items-center justify-between gap-2">
             <p class="text-sm font-semibold text-gray-900 truncate"><%= team_name %></p>
-            <span class="shrink-0 text-xs text-gray-400"><%= team.members.reject { |m| m.id == team.user_id }.size + 1 %></span>
+            <span class="shrink-0 text-xs text-gray-400"><%= team.members.size %></span>
           </div>
           <p class="text-xs text-gray-500 truncate"><%= last_msg ? last_msg.content&.truncate(40) : "No messages yet" %></p>
         </div>

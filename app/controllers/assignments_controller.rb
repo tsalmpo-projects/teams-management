@@ -61,12 +61,14 @@ class AssignmentsController < ApplicationController
       content: "#{name} requests to join a team"
     )
 
-    ActionCable.server.broadcast("notifications_#{assignment.user_id}", {
-      type: "join_request",
-      sender_name: name,
-      assignment_title: assignment.title.truncate(40),
-      assignment_url: assignment_path(assignment)
-    })
+    if assignment.user_id.present?
+      ActionCable.server.broadcast("notifications_#{assignment.user_id}", {
+        type: "join_request",
+        sender_name: name,
+        assignment_title: assignment.title.truncate(40),
+        assignment_url: assignment_path(assignment)
+      })
+    end
 
     redirect_to assignment, notice: "Join request sent!"
   end
@@ -79,7 +81,7 @@ class AssignmentsController < ApplicationController
 
     unless declined
       team = @assignment.team || Team.create!(assignment: @assignment, user: current_user)
-      team.members << message.sender unless team.members.include?(message.sender)
+      team.members << message.sender if message.sender.present? && !team.members.include?(message.sender)
     end
 
     redirect_to @assignment, notice: declined ? "Request declined." : "Request accepted."

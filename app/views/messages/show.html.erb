@@ -1,15 +1,11 @@
 <% content_for :fullscreen, true %>
 
 <%
-  other_name = [@selected_user.firstname, @selected_user.lastname].compact.join(" ")
-  other_name = @selected_user.email.split("@").first if other_name.blank?
-  other_initials = [@selected_user.firstname, @selected_user.lastname].compact.map { |n| n[0] }.join.upcase
-  other_initials = @selected_user.email[0..1].upcase if other_initials.blank?
+  other_name = display_name(@selected_user)
+  other_initials = display_initials(@selected_user)
 
-  current_name = [current_user.firstname, current_user.lastname].compact.join(" ")
-  current_name = current_user.email.split("@").first if current_name.blank?
-  current_initials = [current_user.firstname, current_user.lastname].compact.map { |n| n[0] }.join.upcase
-  current_initials = current_user.email[0..1].upcase if current_initials.blank?
+  current_name = display_name(current_user)
+  current_initials = display_initials(current_user)
 
   conversation_id = [current_user.id, @selected_user.id].sort.join("_")
 %>

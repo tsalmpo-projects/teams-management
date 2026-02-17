@@ -4,13 +4,11 @@
   team_name = @team.assignment&.title || "Team ##{@team.id}"
   owner = @team.user
   non_owner_members = @team.members.reject { |m| m.id == @team.user_id }
-  all_people = [owner] + non_owner_members
+  all_people = ([owner].compact + non_owner_members)
   total_count = all_people.size
 
-  current_name = [current_user.firstname, current_user.lastname].compact.join(" ")
-  current_name = current_user.email.split("@").first if current_name.blank?
-  current_initials = [current_user.firstname, current_user.lastname].compact.map { |n| n[0] }.join.upcase
-  current_initials = current_user.email[0..1].upcase if current_initials.blank?
+  current_name = display_name(current_user)
+  current_initials = display_initials(current_user)
 
   conversation_id = "team_#{@team.id}"
 %>
@@ -42,13 +40,11 @@
       <div class="flex -space-x-2 shrink-0">
         <% all_people.each_with_index do |person, i| %>
           <%
-            m_initials = [person.firstname, person.lastname].compact.map { |n| n[0] }.join.upcase
-            m_initials = person.email[0..1].upcase if m_initials.blank?
-            m_name = [person.firstname, person.lastname].compact.join(" ")
-            m_name = person.email.split("@").first if m_name.blank?
+            m_initials = display_initials(person)
+            m_name = display_name(person)
             ac = avatar_classes(i)
           %>
-          <%= link_to profile_path(person), title: m_name do %>
+          <%= link_to (person ? profile_path(person) : "#"), title: m_name do %>
             <div class="h-8 w-8 rounded-full <%= ac[:bg] %> flex items-center justify-center text-xs font-medium <%= ac[:text] %> border-2 border-white hover:ring-2 <%= ac[:ring] %> transition-shadow"><%= m_initials %></div>
           <% end %>
         <% end %>
@@ -65,10 +61,8 @@
         <%
           is_mine = msg.sender_id == current_user.id
           sender = msg.sender
-          msg_name = [sender.firstname, sender.lastname].compact.join(" ")
-          msg_name = sender.email.split("@").first if msg_name.blank?
-          msg_initials = [sender.firstname, sender.lastname].compact.map { |n| n[0] }.join.upcase
-          msg_initials = sender.email[0..1].upcase if msg_initials.blank?
+          msg_name = display_name(sender)
+          msg_initials = display_initials(sender)
         %>
         <div class="flex items-end gap-2 <%= is_mine ? 'justify-end' : 'justify-start' %>">
           <% unless is_mine %>

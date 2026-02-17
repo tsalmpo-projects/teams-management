@@ -28,10 +28,8 @@
         <%
           is_owner = team.user_id == current_user.id
           owner = team.user
-          owner_name = [owner.firstname, owner.lastname].compact.join(" ")
-          owner_name = owner.email.split("@").first if owner_name.blank?
-          owner_initials = [owner.firstname, owner.lastname].compact.map { |n| n[0] }.join.upcase
-          owner_initials = owner.email[0..1].upcase if owner_initials.blank?
+          owner_name = display_name(owner)
+          owner_initials = display_initials(owner)
           non_owner_members = team.members.reject { |m| m.id == team.user_id }
         %>
         <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-5">
@@ -42,7 +40,7 @@
 
           <%# Owner %>
           <div class="flex items-center gap-2 mb-3">
-            <%= link_to profile_path(owner), class: "flex items-center gap-2 hover:opacity-80 transition-opacity", title: owner_name do %>
+            <%= link_to (owner ? profile_path(owner) : "#"), class: "flex items-center gap-2 hover:opacity-80 transition-opacity", title: owner_name do %>
               <div class="h-7 w-7 rounded-full bg-amber-100 flex items-center justify-center text-xs font-medium text-amber-700 border-2 border-amber-300"><%= owner_initials %></div>
               <span class="text-xs font-medium text-gray-700"><%= owner_name %></span>
             <% end %>
@@ -53,13 +51,11 @@
             <div class="flex -space-x-2">
               <% non_owner_members.each_with_index do |member, i| %>
                 <%
-                  member_name = [member.firstname, member.lastname].compact.join(" ")
-                  member_name = member.email.split("@").first if member_name.blank?
-                  member_initials = [member.firstname, member.lastname].compact.map { |n| n[0] }.join.upcase
-                  member_initials = member.email[0..1].upcase if member_initials.blank?
+                  member_name = display_name(member)
+                  member_initials = display_initials(member)
                   ac = avatar_classes(i)
                 %>
-                <%= link_to profile_path(member), title: member_name do %>
+                <%= link_to (member ? profile_path(member) : "#"), title: member_name do %>
                   <div class="h-8 w-8 rounded-full <%= ac[:bg] %> flex items-center justify-center text-xs font-medium <%= ac[:text] %> border-2 border-white hover:ring-2 <%= ac[:ring] %> transition-shadow"><%= member_initials %></div>
                 <% end %>
               <% end %>

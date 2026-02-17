@@ -37,4 +37,16 @@ module ApplicationHelper
   def avatar_classes(index)
     AVATAR_CLASSES[index % AVATAR_CLASSES.size]
   end
+
+  def display_name(user)
+    return "Deleted User" if user.nil?
+    name = [user.firstname, user.lastname].compact.join(" ")
+    name.blank? ? user.email.split("@").first : name
+  end
+
+  def display_initials(user)
+    return "?" if user.nil?
+    initials = [user.firstname, user.lastname].compact.map { |n| n[0] }.join.upcase
+    initials.blank? ? user.email[0..1].upcase : initials
+  end
 end
