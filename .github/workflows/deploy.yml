@@ -1,0 +1,72 @@
+name: Deploy
+
+on:
+  push:
+    branches: [master]
+  workflow_dispatch:
+
+env:
+  IMAGE_NAME: teams-management
+  IMAGE_FILE: teams-management.tar
+  HOST_PORT: ${{ vars.HOST_PORT || '3636' }}
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    environment: production
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
+      - name: Build Docker image
+        uses: docker/build-push-action@v6
+        with:
+          context: .
+          load: true
+          tags: ${{ env.IMAGE_NAME }}:latest
+          cache-from: type=gha
+          cache-to: type=gha,mode=max
+
+      - name: Export Docker image to tar
+        run: |
+          docker save ${{ env.IMAGE_NAME }}:latest -o ${{ env.IMAGE_FILE }}
+          chmod 644 ${{ env.IMAGE_FILE }}
+
+      - name: Deploy to server
+        env:
+          CF_ACCESS_CLIENT_ID: ${{ secrets.CF_ACCESS_CLIENT_ID }}
+          CF_ACCESS_CLIENT_SECRET: ${{ secrets.CF_ACCESS_CLIENT_SECRET }}
+        run: |
+          curl -fsSL https://github.com/cloudflare/cloudflared/releases/latest/download/cloudflared-linux-amd64.deb -o cloudflared.deb
+          sudo dpkg -i cloudflared.deb
+
+          mkdir -p ~/.ssh
+          echo "${{ secrets.SERVER_SSH_KEY }}" > ~/.ssh/deploy_key
+          chmod 600 ~/.ssh/deploy_key
+          echo "Host deploy-target" > ~/.ssh/config
+          echo "  HostName ${{ secrets.CF_SSH_HOSTNAME }}" >> ~/.ssh/config
+          echo "  User ${{ secrets.SERVER_USER }}" >> ~/.ssh/config
+          echo "  IdentityFile ~/.ssh/deploy_key" >> ~/.ssh/config
+          echo "  StrictHostKeyChecking no" >> ~/.ssh/config
+          echo "  ProxyCommand cloudflared access ssh --hostname %h" >> ~/.ssh/config
+          chmod 600 ~/.ssh/config
+
+          scp ${{ env.IMAGE_FILE }} deploy-target:/tmp/
+
+          ssh deploy-target "docker load -i /tmp/${{ env.IMAGE_FILE }}"
+          ssh deploy-target "rm -f /tmp/${{ env.IMAGE_FILE }}"
+          ssh deploy-target "docker stop ${{ env.IMAGE_NAME }} || true"
+          ssh deploy-target "docker rm ${{ env.IMAGE_NAME }} || true"
+          ssh deploy-target "mkdir -p \$HOME/teams-management-storage && chmod 777 \$HOME/teams-management-storage"
+          ssh deploy-target "docker run -d \
+            --name ${{ env.IMAGE_NAME }} \
+            --restart unless-stopped \
+            -p ${{ env.HOST_PORT }}:80 \
+            -v \$HOME/teams-management-storage:/rails/storage \
+            -e RAILS_MASTER_KEY=${{ secrets.RAILS_MASTER_KEY }} \
+            -e GOOGLE_CLIENT_ID=${{ secrets.GOOGLE_CLIENT_ID }} \
+            -e GOOGLE_CLIENT_SECRET=${{ secrets.GOOGLE_CLIENT_SECRET }} \
+            ${{ env.IMAGE_NAME }}:latest"
