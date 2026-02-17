@@ -1,6 +1,12 @@
-# University Assignments Teams Management
+<p align="center">
+  <img src="public/logo.png" alt="Teams Management" width="120">
+</p>
 
-A web platform where university students can browse assignments, form teams, and collaborate through real-time messaging. Built with Rails 8.1 and Hotwire.
+<h1 align="center">University Assignments Teams Management</h1>
+
+<p align="center">
+  A web platform where university students can browse assignments, form teams, and collaborate through real-time messaging. Built with Rails 8.1 and Hotwire.
+</p>
 
 ## Features
 
