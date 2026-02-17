@@ -6,4 +6,8 @@ class Assignment < ApplicationRecord
   enum :status, { published: 0, in_process: 1, completed: 2 }
 
   validates :title, :body, :subject, presence: true
+
+  def deletable?
+    published? && (team.nil? || team.members.empty?)
+  end
 end

@@ -8,6 +8,8 @@ class ApplicationController < ActionController::Base
   before_action :require_login, unless: :devise_controller?
   before_action :configure_permitted_parameters, if: :devise_controller?
 
+  rescue_from ActiveRecord::RecordNotFound, with: :record_not_found
+
   private
    def require_login
     unless user_signed_in?
@@ -18,5 +20,9 @@ class ApplicationController < ActionController::Base
 
    def configure_permitted_parameters
      devise_parameter_sanitizer.permit(:account_update, keys: [:firstname, :lastname, :department, :bio])
+   end
+
+   def record_not_found
+     redirect_back fallback_location: root_path, alert: "The requested record was not found. The user may have been deleted."
    end
 end
