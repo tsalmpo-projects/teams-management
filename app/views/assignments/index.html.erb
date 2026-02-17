@@ -66,8 +66,10 @@
               </span>
               <span class="text-xs text-gray-500"><%= time_ago_in_words(assignment.created_at) %> ago</span>
             </div>
-            <%= link_to assignment_path(assignment), data: { turbo_method: :delete, turbo_confirm: "Are you sure you want to delete this assignment?" }, class: "text-xs text-red-500 hover:text-red-700 transition-colors" do %>
-              Delete
+            <% if assignment.deletable? %>
+              <%= link_to assignment_path(assignment), data: { turbo_method: :delete, turbo_confirm: "Are you sure you want to delete this assignment?" }, class: "text-xs text-red-500 hover:text-red-700 transition-colors" do %>
+                Delete
+              <% end %>
             <% end %>
           </div>
         </div>

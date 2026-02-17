@@ -28,7 +28,7 @@
           <%
             sc = subject_classes(assignment.subject)
             author = assignment.user
-            author_sc = author ? subject_classes(author.department) : DEFAULT_SUBJECT
+            author_sc = subject_classes(author&.department)
             initials = display_initials(author)
             name = display_name(author)
             subject_label = assignment.subject&.titleize || "Unknown"

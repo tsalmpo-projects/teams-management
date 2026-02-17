@@ -35,6 +35,12 @@ class AssignmentsController < ApplicationController
 
   def destroy
     @assignment = current_user.assignment.find(params[:id])
+
+    unless @assignment.deletable?
+      redirect_to @assignment, alert: "Cannot delete an assignment that is in progress, completed, or has team members."
+      return
+    end
+
     @assignment.destroy
     redirect_to assignments_path, notice: "Assignment was deleted."
   end
@@ -43,6 +49,14 @@ class AssignmentsController < ApplicationController
     assignment = Assignment.find(params[:id])
     unless assignment.published?
       redirect_to assignment, alert: "This assignment is no longer accepting join requests."
+      return
+    end
+    if assignment.user_id == current_user.id
+      redirect_to assignment, alert: "You cannot request to join your own assignment."
+      return
+    end
+    if assignment.user_id.nil?
+      redirect_to assignment, alert: "This assignment's owner no longer exists."
       return
     end
     existing = Message.find_by(sender_id: current_user.id, assignment_id: assignment.id)
