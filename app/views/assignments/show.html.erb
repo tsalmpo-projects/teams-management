@@ -2,15 +2,13 @@
   sc = subject_classes(@assignment.subject)
   stc = status_classes(@assignment.status)
   author = @assignment.user
-  author_sc = subject_classes(author.department)
-  initials = [author.firstname, author.lastname].compact.map { |n| n[0] }.join.upcase
-  initials = author.email[0..1].upcase if initials.blank?
-  name = [author.firstname, author.lastname].compact.join(" ")
-  name = author.email.split("@").first if name.blank?
+  author_sc = author ? subject_classes(author.department) : DEFAULT_SUBJECT
+  initials = display_initials(author)
+  name = display_name(author)
   subject_label = @assignment.subject&.titleize || "Unknown"
-  author_dept_label = author.department&.titleize || "Not set"
+  author_dept_label = author&.department&.titleize || "Not set"
   status_label = @assignment.status&.titleize || "Published"
-  owner = user_signed_in? && current_user.id == @assignment.user_id
+  owner = user_signed_in? && @assignment.user_id.present? && current_user.id == @assignment.user_id
   team = @assignment.team
   members = team&.members || []
 %>
@@ -51,7 +49,7 @@
         <%# Author section %>
         <div class="border-t border-gray-200 pt-6 mb-6">
           <p class="text-xs font-medium text-gray-500 uppercase tracking-wider mb-3">Posted by</p>
-          <%= link_to profile_path(author.id), class: "inline-flex items-center gap-3 hover:bg-gray-50 -ml-2 px-2 py-1.5 rounded-lg transition-colors" do %>
+          <%= link_to (author ? profile_path(author.id) : "#"), class: "inline-flex items-center gap-3 hover:bg-gray-50 -ml-2 px-2 py-1.5 rounded-lg transition-colors" do %>
             <div class="h-10 w-10 rounded-full <%= author_sc[:bg] %> flex items-center justify-center text-sm font-medium <%= author_sc[:text] %>"><%= initials %></div>
             <div>
               <p class="text-sm font-medium text-gray-900"><%= name %></p>
@@ -152,16 +150,14 @@
           <div class="space-y-3">
             <% members.each do |member| %>
               <%
-                member_name = [member.firstname, member.lastname].compact.join(" ")
-                member_name = member.email.split("@").first if member_name.blank?
-                member_initials = [member.firstname, member.lastname].compact.map { |n| n[0] }.join.upcase
-                member_initials = member.email[0..1].upcase if member_initials.blank?
+                member_name = display_name(member)
+                member_initials = display_initials(member)
               %>
-              <%= link_to profile_path(member), class: "flex items-center gap-3 p-3 rounded-lg hover:bg-gray-50 transition-colors" do %>
+              <%= link_to (member ? profile_path(member) : "#"), class: "flex items-center gap-3 p-3 rounded-lg hover:bg-gray-50 transition-colors" do %>
                 <div class="h-9 w-9 rounded-full bg-blue-100 flex items-center justify-center text-xs font-medium text-blue-700"><%= member_initials %></div>
                 <div>
                   <p class="text-sm font-medium text-gray-900"><%= member_name %></p>
-                  <p class="text-xs text-gray-500"><%= member.email %></p>
+                  <p class="text-xs text-gray-500"><%= member&.email || "—" %></p>
                 </div>
               <% end %>
             <% end %>
@@ -181,10 +177,8 @@
               <% join_requests.each do |message| %>
                 <%
                   sender = message.sender
-                  sender_name = [sender.firstname, sender.lastname].compact.join(" ")
-                  sender_name = sender.email.split("@").first if sender_name.blank?
-                  sender_initials = [sender.firstname, sender.lastname].compact.map { |n| n[0] }.join.upcase
-                  sender_initials = sender.email[0..1].upcase if sender_initials.blank?
+                  sender_name = display_name(sender)
+                  sender_initials = display_initials(sender)
                 %>
                 <div class="flex items-center justify-between gap-4 p-4 rounded-lg border border-gray-100 bg-gray-50">
                   <div class="flex items-center gap-3">

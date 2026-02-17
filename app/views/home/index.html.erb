@@ -28,13 +28,11 @@
           <%
             sc = subject_classes(assignment.subject)
             author = assignment.user
-            author_sc = subject_classes(author.department)
-            initials = [author.firstname, author.lastname].compact.map { |n| n[0] }.join.upcase
-            initials = author.email[0..1].upcase if initials.blank?
-            name = [author.firstname, author.lastname].compact.join(" ")
-            name = author.email.split("@").first if name.blank?
+            author_sc = author ? subject_classes(author.department) : DEFAULT_SUBJECT
+            initials = display_initials(author)
+            name = display_name(author)
             subject_label = assignment.subject&.titleize || "Unknown"
-            author_dept_label = author.department&.titleize || "Not set"
+            author_dept_label = author&.department&.titleize || "Not set"
           %>
 
           <div class="bg-white rounded-xl shadow-sm border border-gray-200 border-l-4 <%= sc[:border] %> p-5 flex flex-col justify-between">
@@ -43,7 +41,8 @@
               <span class="inline-flex items-center rounded-full <%= sc[:bg] %> px-2.5 py-0.5 text-xs font-medium <%= sc[:text] %> mb-2"><%= subject_label %></span>
               <p class="text-sm text-gray-600 line-clamp-3"><%= assignment.body %></p>
             </div>
-            <%= link_to profile_path(author), class: "flex items-center gap-3 mt-4 pt-4 border-t border-gray-100 hover:bg-gray-50 -mx-5 -mb-5 px-5 pb-5 pt-4 rounded-b-xl transition-colors" do %>
+            <% author_link = author ? profile_path(author) : "#" %>
+            <%= link_to author_link, class: "flex items-center gap-3 mt-4 pt-4 border-t border-gray-100 hover:bg-gray-50 -mx-5 -mb-5 px-5 pb-5 pt-4 rounded-b-xl transition-colors" do %>
               <div class="h-8 w-8 rounded-full <%= author_sc[:bg] %> flex items-center justify-center text-xs font-medium <%= author_sc[:text] %>"><%= initials %></div>
               <div>
                 <p class="text-sm font-medium text-gray-900"><%= name %></p>

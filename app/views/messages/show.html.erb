@@ -1,28 +1,19 @@
 <% content_for :fullscreen, true %>
 
 <%
-  other_name = [@selected_user.firstname, @selected_user.lastname].compact.join(" ")
-  other_name = @selected_user.email.split("@").first if other_name.blank?
-  other_initials = [@selected_user.firstname, @selected_user.lastname].compact.map { |n| n[0] }.join.upcase
-  other_initials = @selected_user.email[0..1].upcase if other_initials.blank?
+  other_name = display_name(@selected_user)
+  other_initials = display_initials(@selected_user)
 
-  current_name = [current_user.firstname, current_user.lastname].compact.join(" ")
-  current_name = current_user.email.split("@").first if current_name.blank?
-  current_initials = [current_user.firstname, current_user.lastname].compact.map { |n| n[0] }.join.upcase
-  current_initials = current_user.email[0..1].upcase if current_initials.blank?
+  current_name = display_name(current_user)
+  current_initials = display_initials(current_user)
 
   conversation_id = [current_user.id, @selected_user.id].sort.join("_")
 %>
 
 <div class="flex flex-1 overflow-hidden">
 
-  <%# Left panel — conversation list %>
-  <div class="w-80 border-r border-gray-200 bg-white flex flex-col shrink-0">
-    <div class="p-4 border-b border-gray-200">
-      <h2 class="text-lg font-semibold text-gray-900">Messages</h2>
-    </div>
-    <%= render "messages/conversation_list" %>
-  </div>
+  <%# Left panel — sidebar with tabs %>
+  <%= render "messages/sidebar" %>
 
   <%# Right panel — conversation %>
   <div class="flex-1 flex flex-col bg-white"
@@ -32,7 +23,11 @@
        data-chat-current-user-name-value="<%= current_name %>"
        data-chat-current-user-initials-value="<%= current_initials %>"
        data-chat-send-url-value="<%= send_message_path(@selected_user) %>"
-       data-chat-csrf-token-value="<%= form_authenticity_token %>">
+       data-chat-csrf-token-value="<%= form_authenticity_token %>"
+       data-chat-recipient-id-value="<%= @selected_user.id %>"
+       data-chat-recipient-name-value="<%= other_name %>"
+       data-chat-recipient-initials-value="<%= other_initials %>"
+       data-chat-conversation-url-value="<%= conversation_path(@selected_user) %>">
 
     <%# Conversation header %>
     <div class="p-4 border-b border-gray-200 flex items-center gap-3">

@@ -1,0 +1,58 @@
+<%# Search input with clear button and loading spinner %>
+<div class="px-4 pt-3 pb-2">
+  <div class="relative group">
+    <svg class="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-gray-400 group-focus-within:text-blue-500 transition-colors pointer-events-none" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+      <path stroke-linecap="round" stroke-linejoin="round" d="m21 21-5.197-5.197m0 0A7.5 7.5 0 1 0 5.196 5.196a7.5 7.5 0 0 0 10.607 10.607Z" />
+    </svg>
+    <input type="text"
+           data-contacts-target="searchInput"
+           data-action="input->contacts#search"
+           placeholder="Search by name or email..."
+           autocomplete="off"
+           class="w-full pl-9 pr-16 py-2 text-sm border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent bg-gray-50 focus:bg-white transition-all duration-150">
+    <%# Loading spinner %>
+    <div data-contacts-target="loadingSpinner" class="hidden absolute right-8 top-1/2 -translate-y-1/2">
+      <svg class="h-4 w-4 animate-spin text-blue-500" fill="none" viewBox="0 0 24 24">
+        <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+        <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z"></path>
+      </svg>
+    </div>
+    <%# Clear button %>
+    <button data-contacts-target="clearBtn"
+            data-action="click->contacts#clearSearch"
+            class="hidden absolute right-2 top-1/2 -translate-y-1/2 h-6 w-6 items-center justify-center rounded-full text-gray-400 hover:bg-gray-200 hover:text-gray-600 active:scale-90 transition-all duration-150 cursor-pointer">
+      <svg class="h-3.5 w-3.5" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor">
+        <path stroke-linecap="round" stroke-linejoin="round" d="M6 18 18 6M6 6l12 12" />
+      </svg>
+    </button>
+  </div>
+</div>
+
+<%# Department filter pills %>
+<div class="px-4 pb-3 flex gap-1.5 flex-wrap" data-contacts-target="filterPills">
+  <button data-action="click->contacts#selectFilter" data-department
+          class="rounded-full px-3 py-1 text-xs font-medium bg-gray-900 text-white shadow-sm hover:opacity-90 active:scale-95 transition-all duration-150 cursor-pointer">All</button>
+  <button data-action="click->contacts#selectFilter" data-department="computer_science"
+          class="rounded-full px-3 py-1 text-xs font-medium bg-gray-100 text-gray-600 hover:bg-gray-200 active:scale-95 transition-all duration-150 cursor-pointer">CS</button>
+  <button data-action="click->contacts#selectFilter" data-department="physics"
+          class="rounded-full px-3 py-1 text-xs font-medium bg-gray-100 text-gray-600 hover:bg-gray-200 active:scale-95 transition-all duration-150 cursor-pointer">Physics</button>
+  <button data-action="click->contacts#selectFilter" data-department="math"
+          class="rounded-full px-3 py-1 text-xs font-medium bg-gray-100 text-gray-600 hover:bg-gray-200 active:scale-95 transition-all duration-150 cursor-pointer">Math</button>
+  <button data-action="click->contacts#selectFilter" data-department="chemistry"
+          class="rounded-full px-3 py-1 text-xs font-medium bg-gray-100 text-gray-600 hover:bg-gray-200 active:scale-95 transition-all duration-150 cursor-pointer">Chemistry</button>
+</div>
+
+<%# Result count badge %>
+<div data-contacts-target="resultCount" class="hidden px-4 pb-1">
+  <span class="text-[11px] font-medium text-gray-400 uppercase tracking-wider"></span>
+</div>
+
+<%# Search results %>
+<div data-contacts-target="searchResults" class="hidden mx-4 mb-3 max-h-52 overflow-y-auto border border-gray-200 rounded-xl bg-white shadow-lg ring-1 ring-black/5"></div>
+
+<%# Divider + Your Contacts section %>
+<div class="border-t border-gray-100 mx-4 mb-2"></div>
+<div class="px-4 pb-1">
+  <p class="text-xs font-semibold text-gray-400 uppercase tracking-wider">Your Contacts</p>
+</div>
+<div data-contacts-target="contactsList" class="flex-1 overflow-y-auto px-2"></div>

@@ -116,7 +116,7 @@ class MessagesController < ApplicationController
     end
 
     # Also notify team creator if not current user and not already a member
-    if team.user_id != current_user.id && !team.members.exists?(id: team.user_id)
+    if team.user_id.present? && team.user_id != current_user.id && !team.members.exists?(id: team.user_id)
       ActionCable.server.broadcast("notifications_#{team.user_id}", {
         type: "new_message",
         sender_name: sender_display_name(current_user),
@@ -177,11 +177,13 @@ class MessagesController < ApplicationController
   end
 
   def sender_display_name(user)
+    return "Deleted User" if user.nil?
     name = [user.firstname, user.lastname].compact.join(" ")
     name.blank? ? user.email.split("@").first : name
   end
 
   def sender_initials(user)
+    return "?" if user.nil?
     initials = [user.firstname, user.lastname].compact.map { |n| n[0] }.join.upcase
     initials.blank? ? user.email[0..1].upcase : initials
   end

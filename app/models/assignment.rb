@@ -1,5 +1,5 @@
 class Assignment < ApplicationRecord
-  belongs_to :user
+  belongs_to :user, optional: true
   has_one :team, dependent: :destroy
 
   enum :subject, { computer_science: 0, physics: 1, math: 2, chemistry: 3 }

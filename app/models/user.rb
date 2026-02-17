@@ -5,10 +5,11 @@ class User < ApplicationRecord
          :recoverable, :rememberable, :validatable,
          :omniauthable, omniauth_providers: [:google_oauth2]
   enum :department, { computer_science: 0, physics: 1, math: 2, chemistry: 3 }
-  has_many :assignment, dependent: :destroy
-  has_many :contact, dependent: :destroy
-  has_many :sent_message, class_name: "Message", foreign_key: :sender_id, dependent: :destroy
-  has_many :received_message, class_name: "Message", foreign_key: :recipient_id, dependent: :destroy
+  has_many :assignment, dependent: :nullify
+  has_many :contact, dependent: :delete_all
+  has_many :contact_users, through: :contact
+  has_many :sent_message, class_name: "Message", foreign_key: :sender_id, dependent: :nullify
+  has_many :received_message, class_name: "Message", foreign_key: :recipient_id, dependent: :nullify
   has_and_belongs_to_many :team, join_table: "team_members"
 
   def self.from_omniauth(access_token)

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_02_16_205545) do
+ActiveRecord::Schema[8.1].define(version: 2026_02_17_181638) do
   create_table "assignments", force: :cascade do |t|
     t.text "body"
     t.datetime "created_at", null: false
@@ -19,7 +19,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_02_16_205545) do
     t.integer "subject", null: false
     t.text "title"
     t.datetime "updated_at", null: false
-    t.integer "user_id", null: false
+    t.integer "user_id"
     t.index ["user_id"], name: "index_assignments_on_user_id"
   end
 
@@ -39,7 +39,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_02_16_205545) do
     t.boolean "declined"
     t.boolean "read", default: false, null: false
     t.integer "recipient_id"
-    t.integer "sender_id", null: false
+    t.integer "sender_id"
     t.integer "team_id"
     t.datetime "updated_at", null: false
     t.index ["assignment_id"], name: "index_messages_on_assignment_id"
@@ -50,7 +50,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_02_16_205545) do
 
   create_table "team_members", id: false, force: :cascade do |t|
     t.integer "team_id", null: false
-    t.integer "user_id", null: false
+    t.integer "user_id"
     t.index ["team_id", "user_id"], name: "index_team_members_on_team_id_and_user_id", unique: true
   end
 
@@ -58,7 +58,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_02_16_205545) do
     t.integer "assignment_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.integer "user_id", null: false
+    t.integer "user_id"
     t.index ["assignment_id"], name: "index_teams_on_assignment_id"
     t.index ["user_id"], name: "index_teams_on_user_id"
   end
@@ -81,13 +81,14 @@ ActiveRecord::Schema[8.1].define(version: 2026_02_16_205545) do
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
 
-  add_foreign_key "assignments", "users"
-  add_foreign_key "contacts", "users"
-  add_foreign_key "contacts", "users", column: "contact_id"
+  add_foreign_key "assignments", "users", on_delete: :nullify
+  add_foreign_key "contacts", "users", column: "contact_id", on_delete: :cascade
+  add_foreign_key "contacts", "users", on_delete: :cascade
   add_foreign_key "messages", "assignments"
   add_foreign_key "messages", "teams"
-  add_foreign_key "messages", "users", column: "recipient_id"
-  add_foreign_key "messages", "users", column: "sender_id"
+  add_foreign_key "messages", "users", column: "recipient_id", on_delete: :nullify
+  add_foreign_key "messages", "users", column: "sender_id", on_delete: :nullify
+  add_foreign_key "team_members", "users", on_delete: :nullify
   add_foreign_key "teams", "assignments"
-  add_foreign_key "teams", "users"
+  add_foreign_key "teams", "users", on_delete: :nullify
 end

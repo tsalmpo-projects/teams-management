@@ -7,6 +7,9 @@ Rails.application.routes.draw do
     patch :handle_join_request, on: :member
   end
 
+  get "contacts/search", to: "contacts#search", as: :search_contacts
+  resources :contacts, only: [:index, :create, :destroy]
+
   get "teams", to: "teams#index", as: :teams
   get "teams/:team_id/messages", to: "messages#team_show", as: :team_conversation
   post "teams/:team_id/messages", to: "messages#team_create", as: :send_team_message
